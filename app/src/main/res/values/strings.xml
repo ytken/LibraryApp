@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Library</string>
+    <string-array name="options">
+        <item>Меню</item>
+        <item>Истории</item>
+        <item>Подписка</item>
+        <item>Настройки</item>
+    </string-array>
+    <string name="open" translatable="false">Open</string>
+    <string name="close" translatable="false">Close</string>
 </resources>

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LibraryApp" parent="Theme.AppCompat.NoActionBar">
-        <!-- TODO: changeTheme - toolbar -->
+    <style name="Theme.LibraryApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- TODO: change colors -->
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -17,6 +17,12 @@
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/loading</item>
+    </style>
+
+    <style name="SpinnerItemStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/merienda</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>

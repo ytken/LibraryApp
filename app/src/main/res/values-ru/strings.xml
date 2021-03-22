@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Library</string>
+
+    <string-array name="options">
+        <item>Menu</item>
+        <item>Stories</item>
+        <item>Subscription</item>
+        <item>Settings</item>
+    </string-array>
+</resources>
