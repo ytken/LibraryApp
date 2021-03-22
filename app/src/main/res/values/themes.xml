@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LibraryApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.LibraryApp" parent="@android:style/Theme.Holo.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryPurple</item>
         <item name="colorPrimaryVariant">@color/primaryBlue</item>
@@ -9,6 +9,8 @@
         <item name="colorSecondary">@color/primaryGreen</item>
         <item name="colorSecondaryVariant">@color/primaryBlue</item>
         <item name="colorOnSecondary">@color/black</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

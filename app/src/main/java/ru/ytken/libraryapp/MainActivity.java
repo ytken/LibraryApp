@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,11 +29,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         toolbarTitle = findViewById(R.id.toolbarTitle);
 
         spinner = findViewById(R.id.spinner);
