@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
-    <style name="Theme.LibraryApp" parent="@android:style/Theme.Holo.NoActionBar">
+    <style name="Theme.LibraryApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryPurple</item>
         <item name="colorPrimaryVariant">@color/primaryBlue</item>
@@ -8,7 +9,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/primaryGreen</item>
         <item name="colorSecondaryVariant">@color/primaryBlue</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/primaryWhite</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
         <!-- Status bar color. -->
@@ -16,14 +17,8 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+    <!--<style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/loading</item>
-    </style>
-
-    <style name="SpinnerItemStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:fontFamily">@font/merienda</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
-    </style>
+    </style>-->
 
 </resources>

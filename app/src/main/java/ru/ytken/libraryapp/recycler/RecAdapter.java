@@ -14,43 +14,47 @@ import java.util.List;
 
 import ru.ytken.libraryapp.R;
 
-public class RecAdapter extends RecyclerView.Adapter<RecAdapter.RecViewHolder> {
+public class RecAdapter extends RecyclerView.Adapter<RecHolder> implements RecHolder.IListener{
 
-    List<Integer> data;
+    List<StoryItem> data;
+    StoryClickedListener listener;
 
-    public RecAdapter() {
+    @Override
+    public void onStoryClicked(int id) {
+        listener.storyClicked(data.get(id));
+    }
+
+    public interface StoryClickedListener {
+        void storyClicked(StoryItem item);
+    }
+
+    public RecAdapter(StoryClickedListener listener) {
+        super();
+        this.listener = listener;
         data = new ArrayList<>();
-        data.add(R.drawable.cover);
-        data.add(R.drawable.cover);
-        data.add(R.drawable.cover);
-        data.add(R.drawable.cover);
+        StoryItem firstStory = new StoryItem(1, R.drawable.cover);
+        StoryItem loadStory = new StoryItem(0, R.drawable.loading);
+        data.add(firstStory);
+        data.add(loadStory);
     }
 
     @NonNull
     @Override
-    public RecViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_game, parent, false);
-        return new RecViewHolder(view);
+    public RecHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View layout = inflater.inflate(R.layout.item_game, parent, false);
+        return new RecHolder(layout, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecViewHolder holder, int position) {
-        Resources res = holder.itemView.getResources();
-        holder.covering.setImageDrawable(res.getDrawable(data.get(position)));
+    public void onBindViewHolder(@NonNull RecHolder holder, int position) {
+        StoryItem item = data.get(position);
+        holder.bind(item);
     }
 
     @Override
     public int getItemCount() {
         return data.size();
-    }
-
-    public static class RecViewHolder extends RecyclerView.ViewHolder {
-
-        public ImageView covering;
-        public RecViewHolder(@NonNull View itemView) {
-            super(itemView);
-            covering = itemView.findViewById(R.id.imageView);
-        }
     }
 
 }
