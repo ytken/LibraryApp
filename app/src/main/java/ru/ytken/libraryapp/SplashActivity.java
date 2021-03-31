@@ -1,12 +1,10 @@
 package ru.ytken.libraryapp;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Process;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -17,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.DiffUtil;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -67,7 +64,6 @@ public class SplashActivity extends AppCompatActivity {
             age = getAge(year, month, day);
             if ((month == today.get(Calendar.MONTH)+1) && (day < today.get(Calendar.DAY_OF_MONTH)))
                 age ++;
-            Log.d("AgeS", age.toString() + " " + year + " " + month + "!=" +today.get(Calendar.MONTH)+ " " + day + "!=" + today.get(Calendar.DAY_OF_MONTH));
             if (age >= 18) {
                 editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), age);
                 editor.apply();

@@ -1,7 +1,5 @@
 package ru.ytken.libraryapp;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -9,7 +7,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 public class StoryFirstSetNameActivity extends AppCompatActivity implements AskNameDialog.OnFinalListener {
     ImageView imageBackground;
