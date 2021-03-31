@@ -6,13 +6,17 @@
     <string name="setname">Начать историю</string>
     <string name="cancel">Отмена</string>
     <string name="hint_set_name">Введите имя</string>
-    <integer name="age">18</integer>
+    <string name="name_author">Автор</string>
 
+    <integer name="age">18</integer>
+    <dimen name="name_first_story">30</dimen>
+    <dimen name="words_text_size">30sp</dimen>
 
     <string name="TAG_DIALOG" translatable="false">DIALOG_SET_NAME</string>
     <string name="LOG_TAG" translatable="false">myLog</string>
     <string name="TAG_CHAR_NAME" translatable="false">CHARACTER_NAME</string>
     <string name="TAG_CHAR_SEX" translatable="false">CHARACTER_SEX</string>
     <string name="TAG_PERS_AGE" translatable="false">PERSO_AGE</string>
-    <string name="prefs_first_story_name" translatable="false">first_story1</string>
+    <string name="prefs_first_story_name" translatable="false">first_story</string>
+
 </resources>
