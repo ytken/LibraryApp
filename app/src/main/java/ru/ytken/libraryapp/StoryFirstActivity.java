@@ -2,7 +2,6 @@ package ru.ytken.libraryapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +17,8 @@ import java.io.InputStreamReader;
 
 public class StoryFirstActivity extends AppCompatActivity implements View.OnClickListener {
 
+    String line = "";
+    int picId, textId;
     View view;
     Button refreshPrefs;
     ImageView imageView, backgr;
@@ -25,6 +26,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     BufferedReader reader;
     InputStream inputStream;
     SharedPreferences sPref; SharedPreferences.Editor editor;
+    int countLine = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,27 +39,32 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         imageView = findViewById(R.id.imageWords);
         imageView.setOnClickListener(this);
         imageView.setBackgroundResource(R.color.transparent);
-
         backgr = findViewById(R.id.imageBackgr);
-        /*ViewTreeObserver viewTreeObserver = view.getViewTreeObserver();
-        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Log.d("myWords", "were in global listener");
-                try {
-                    String line = reader.readLine();
-                    wordsView.setText(line);
-                    Log.d("myWords", line);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
 
-        inputStream = getResources().openRawResource(R.raw.man_author_1);
+        String sex = getIntent().getStringExtra("sex");
+        if (sex.equals("M"))
+            textId = R.raw.man_author_1;
+        else
+            textId = R.raw.woman_author_1;
+
+        inputStream = getResources().openRawResource(textId);
         wordsView = findViewById(R.id.textWords);
         reader = new BufferedReader(new InputStreamReader(inputStream));
-
+        countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
+        for (int i = 0; i < countLine; i++) {
+            try {
+                line = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        picId = sPref.getInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
+        if (picId == 0)
+            backgr.setImageDrawable(getResources().getDrawable(R.drawable.black_screen));
+        else
+            backgr.setImageDrawable(getResources().getDrawable(picId));
+        if (!line.isEmpty())
+            wordsView.setText(line);
         refreshPrefs = findViewById(R.id.buttonRefresh);
         refreshPrefs.setOnClickListener(this);
     }
@@ -68,13 +75,14 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             case R.id.buttonRefresh:
                 editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
                 editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), -1);
+                editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
                 editor.apply();
                 break;
 
             case R.id.imageWords:
                 try {
-                    String line = reader.readLine();
-                    int picId = 0;
+                    line = reader.readLine();
+                    countLine++;
                     if (line.contains("Image")) {
                         String pic = line.substring(6);
                         switch (pic) {
@@ -87,13 +95,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             default: picId = 0; break;
                         }
                         if (picId == 0)
-                            backgr.setColorFilter(getResources().getColor(R.color.primaryWhite));
+                            backgr.setImageDrawable(getResources().getDrawable(R.drawable.black_screen));
                         else
                             backgr.setImageDrawable(getResources().getDrawable(picId));
+                        line = reader.readLine();
+                        countLine++;
+                        wordsView.setText(line);
                     }
                     else {
                         wordsView.setText(line);
-                        Log.d("myWords", line);
                     }
 
                 } catch (IOException e) {
@@ -104,5 +114,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),countLine);
+        editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), picId);
+        editor.apply();
+        super.onDestroy();
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Process;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -62,7 +63,8 @@ public class SplashActivity extends AppCompatActivity {
         Button changingDateButton = findViewById(R.id.buttonSetDate);
         changingDateButton.setOnClickListener(v -> {
             age = getAge(year, month, day);
-            if ((month == today.get(Calendar.MONTH)+1) && (day < today.get(Calendar.DAY_OF_MONTH)))
+            Log.d("wtf age", age + " " + year + " " + month + " " + day);
+            if ((month == today.get(Calendar.MONTH)+1) && (day < today.get(Calendar.DAY_OF_MONTH)) || (month == today.get(Calendar.MONTH)))
                 age ++;
             if (age >= 18) {
                 editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), age);
