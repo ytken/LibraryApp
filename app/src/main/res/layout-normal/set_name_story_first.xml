@@ -19,8 +19,8 @@
 
     <ImageButton
         android:id="@+id/story_button_back"
-        android:layout_width="103dp"
-        android:layout_height="112dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@android:color/transparent"
         android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,13 +59,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/marta"
         android:text="@string/main_woman_name"
+        android:textColor="@color/primaryBlack"
         android:textSize="@dimen/names_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_woman"
         app:layout_constraintEnd_toEndOf="@+id/button_woman"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="@+id/button_woman"
         app:layout_constraintTop_toTopOf="@+id/button_woman"
-        app:layout_constraintVertical_bias="0.864" />
+        app:layout_constraintVertical_bias="0.847" />
 
     <TextView
         android:id="@+id/name_man"
@@ -73,12 +74,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/marta"
         android:text="@string/main_man_name"
+        android:textColor="@color/primaryBlack"
         android:textSize="@dimen/names_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_man"
         app:layout_constraintEnd_toEndOf="@+id/button_man"
-        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="@+id/button_man"
         app:layout_constraintTop_toTopOf="@+id/button_man"
-        app:layout_constraintVertical_bias="0.854" />
+        app:layout_constraintVertical_bias="0.855" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

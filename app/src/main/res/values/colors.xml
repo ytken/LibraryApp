@@ -4,7 +4,7 @@
     <color name="primaryBlue">#3398DA</color>
     <color name="primaryPurple">#8D44AD</color>
     <color name="primaryWhite">#FFFCF9</color>
-    <color name="black">#352D39</color>
+    <color name="primaryBlack">#352D39</color>
     <color name="white">#00000000</color>
     <color name="transparent">#00000000</color>
 </resources>

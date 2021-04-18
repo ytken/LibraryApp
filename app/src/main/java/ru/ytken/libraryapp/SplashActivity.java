@@ -8,7 +8,11 @@ import android.os.Process;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -19,7 +23,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private DatePicker mDatePicker;
+    private EditText editTextSetBirthdate;
     private TextView mInfoTextView;
     private Integer day, month, year;
     SharedPreferences sPref; SharedPreferences.Editor editor;
@@ -39,44 +43,39 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         }
         mInfoTextView = findViewById(R.id.textAgeDate);
-        mDatePicker = findViewById(R.id.datePicker);
-        mDatePicker.setCalendarViewShown(false);
-        mDatePicker.setSpinnersShown(true);
         Calendar today = Calendar.getInstance();
-
-        mInfoTextView.setText("Ваша дата рождения:\n" + new StringBuilder()
-                .append(today.get(Calendar.DAY_OF_MONTH)).append(".")
-                .append(today.get(Calendar.MONTH)+1).append(".")
-                .append(today.get(Calendar.YEAR)-18));
+        mInfoTextView.setText("Введите вашу дату рождения:");
         day = today.get(Calendar.DAY_OF_MONTH); month = today.get(Calendar.MONTH)+1; year = today.get(Calendar.YEAR)-18;
 
-        mDatePicker.init(year, month-1, day, (view, year, monthOfYear, dayOfMonth) -> {
-                    day = mDatePicker.getDayOfMonth();
-                    month = mDatePicker.getMonth() + 1;
-                    this.year = mDatePicker.getYear();
-                    mInfoTextView.setText("Ваша дата рождения:\n" + new StringBuilder()
-                            .append(day).append(".")
-                            .append(month).append(".")
-                            .append(year));
-                });
+        editTextSetBirthdate = findViewById(R.id.editTextSetDate);
+        editTextSetBirthdate.addTextChangedListener(new MaskWatcher("##.##.####"));
 
         Button changingDateButton = findViewById(R.id.buttonSetDate);
         changingDateButton.setOnClickListener(v -> {
-            age = getAge(year, month, day);
-            Log.d("wtf age", age + " " + year + " " + month + " " + day);
-            if ((month == today.get(Calendar.MONTH)+1) && (day < today.get(Calendar.DAY_OF_MONTH)) || (month == today.get(Calendar.MONTH)))
-                age ++;
-            if (age >= 18) {
-                editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), age);
-                editor.apply();
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+            String dateBirth = editTextSetBirthdate.getText().toString();
+            day = Integer.parseInt(dateBirth.substring(0,1));
+            month = Integer.parseInt(dateBirth.substring(3,4));
+            year = Integer.parseInt(dateBirth.substring(6));
+            if ((year >= 1900) && (year <= today.get(Calendar.YEAR)) && (month <= 12) && (day <= 31)) {
+                age = getAge(year, month, day);
+                if ((month == today.get(Calendar.MONTH)+1) && (day < today.get(Calendar.DAY_OF_MONTH)) || (month == today.get(Calendar.MONTH)))
+                    age ++;
+                if (age >= 18) {
+                    editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), age);
+                    editor.apply();
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    DialogFragment dialog = new DialogExit();
+                    dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                }
             }
             else {
-                DialogFragment dialog = new DialogExit();
-                dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                Toast.makeText(SplashActivity.this, "Wrong date!", Toast.LENGTH_SHORT).show();
             }
+
         });
 
     }
@@ -88,7 +87,7 @@ public class SplashActivity extends AppCompatActivity {
         dob.set(year, month, day);
         int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
         if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){ age--;}
-        Integer ageInt = new Integer(age);
+        Integer ageInt = Integer.valueOf(age);
 
         return ageInt;
     }

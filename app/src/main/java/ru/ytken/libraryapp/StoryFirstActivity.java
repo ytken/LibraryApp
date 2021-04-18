@@ -43,6 +43,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         imageView.setOnClickListener(this);
         imageView.setBackgroundResource(R.color.transparent);
         backgr = findViewById(R.id.imageBackgr);
+        backgr.setOnClickListener(this);
 
         String sex = getIntent().getStringExtra("sex");
         if (sex.equals("M"))
@@ -85,7 +86,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 editor.apply();
                 Toast.makeText(StoryFirstActivity.this, "Данные обновлены", Toast.LENGTH_SHORT).show();
                 break;
-
+            case R.id.imageBackgr:
             case R.id.imageWords:
                 try {
                     line = reader.readLine();
@@ -102,16 +103,25 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             case "bomb": picId = R.drawable.bomb_town; break;
                             default: picId = 0; break;
                         }
+                        imageView.setVisibility(View.INVISIBLE);
+                        wordsView.setVisibility(View.INVISIBLE);
+
                         if (picId == 0)
                             backgr.setImageDrawable(getResources().getDrawable(R.drawable.black_screen));
                         else
                             backgr.setImageDrawable(getResources().getDrawable(picId));
                         line = reader.readLine();
+
+                        RunAnimation(backgr);
                         countLine++;
-                        wordsView.setText(line);
-                        RunAnimation(wordsView);
                     }
                     else {
+                        if (imageView.getVisibility() == View.INVISIBLE) {
+                            imageView.setVisibility(View.VISIBLE);
+                            RunAnimation(imageView);
+                            wordsView.setVisibility(View.VISIBLE);
+                        }
+
                         wordsView.setText(line);
                         RunAnimation(wordsView);
                     }
@@ -133,7 +143,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         super.onDestroy();
     }
 
-    private void RunAnimation(TextView tv)
+    private void RunAnimation(View tv)
     {
         Animation a = AnimationUtils.loadAnimation(this, R.anim.scale);
         a.reset();

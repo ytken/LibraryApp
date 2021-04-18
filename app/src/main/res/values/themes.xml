@@ -5,16 +5,21 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryPurple</item>
         <item name="colorPrimaryVariant">@color/primaryBlue</item>
-        <item name="colorOnPrimary">@color/primaryWhite</item>
+        <item name="colorOnPrimary">@color/primaryBlack</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/primaryGreen</item>
         <item name="colorSecondaryVariant">@color/primaryBlue</item>
-        <item name="colorOnSecondary">@color/primaryWhite</item>
+        <item name="colorOnSecondary">@color/primaryBlack</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="MyDatePicker" parent="android:Widget.Material.Light.DatePicker">
+        <item name="android:textColorPrimary">@color/primaryBlack</item>
+        <item name="android:textColorHint">@color/primaryBlue</item>
     </style>
 
     <!--<style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">

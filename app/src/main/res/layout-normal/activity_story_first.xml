@@ -31,8 +31,8 @@
 
     <ImageView
         android:id="@+id/imageWords"
-        android:layout_width="393dp"
-        android:layout_height="934dp"
+        android:layout_width="350dp"
+        android:layout_height="883dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,19 +43,20 @@
 
     <TextView
         android:id="@+id/textWords"
-        android:layout_width="266dp"
-        android:layout_height="298dp"
+        android:layout_width="198dp"
+        android:layout_height="266dp"
         android:fontFamily="@font/marta"
         android:gravity="center_vertical"
-        android:padding="35dp"
+        android:padding="20dp"
         android:text="@string/hint_click_first_story"
         android:textSize="@dimen/words_text_size"
+        android:textColor="@color/primaryBlack"
         app:layout_constraintBottom_toBottomOf="@+id/imageWords"
         app:layout_constraintEnd_toEndOf="@+id/imageWords"
         app:layout_constraintHorizontal_bias="0.645"
         app:layout_constraintStart_toStartOf="@+id/imageWords"
         app:layout_constraintTop_toTopOf="@+id/imageWords"
-        app:layout_constraintVertical_bias="0.463" />
+        app:layout_constraintVertical_bias="0.485" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
