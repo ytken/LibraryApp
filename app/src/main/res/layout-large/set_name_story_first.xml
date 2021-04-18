@@ -12,13 +12,15 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/story_button_back"
-        android:layout_width="150dp"
-        android:layout_height="170dp"
+        android:layout_width="140dp"
+        android:layout_height="150dp"
         android:background="@android:color/transparent"
         android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,28 +29,28 @@
 
     <ImageButton
         android:id="@+id/button_woman"
-        android:layout_width="190dp"
-        android:layout_height="233dp"
+        android:layout_width="194dp"
+        android:layout_height="234dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.634"
+        app:layout_constraintVertical_bias="0.529"
         app:srcCompat="@drawable/words_left_pers" />
 
     <ImageButton
         android:id="@+id/button_man"
-        android:layout_width="186dp"
-        android:layout_height="256dp"
+        android:layout_width="195dp"
+        android:layout_height="232dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintHorizontal_bias="0.699"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.644"
+        app:layout_constraintVertical_bias="0.528"
         app:srcCompat="@drawable/words_right_pers" />
 
     <TextView
@@ -60,10 +62,10 @@
         android:textSize="@dimen/names_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_woman"
         app:layout_constraintEnd_toEndOf="@+id/button_woman"
-        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="@+id/button_woman"
         app:layout_constraintTop_toTopOf="@+id/button_woman"
-        app:layout_constraintVertical_bias="0.865" />
+        app:layout_constraintVertical_bias="0.864" />
 
     <TextView
         android:id="@+id/name_man"
@@ -74,9 +76,9 @@
         android:textSize="@dimen/names_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/button_man"
         app:layout_constraintEnd_toEndOf="@+id/button_man"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.546"
         app:layout_constraintStart_toStartOf="@+id/button_man"
         app:layout_constraintTop_toTopOf="@+id/button_man"
-        app:layout_constraintVertical_bias="0.847" />
+        app:layout_constraintVertical_bias="0.854" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

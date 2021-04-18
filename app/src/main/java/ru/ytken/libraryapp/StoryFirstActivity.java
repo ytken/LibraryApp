@@ -3,9 +3,12 @@ package ru.ytken.libraryapp;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +61,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 e.printStackTrace();
             }
         }
+        //editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
+        //editor.apply();
         picId = sPref.getInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
         if (picId == 0)
             backgr.setImageDrawable(getResources().getDrawable(R.drawable.black_screen));
@@ -76,7 +81,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
                 editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), -1);
                 editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
+                editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
                 editor.apply();
+                Toast.makeText(StoryFirstActivity.this, "Данные обновлены", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.imageWords:
@@ -92,6 +99,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             case "white": picId = R.drawable.while_flash; break;
                             case "smoke": picId = R.drawable.smoke; break;
                             case "workshop": picId = R.drawable.royal_workshop; break;
+                            case "bomb": picId = R.drawable.bomb_town; break;
                             default: picId = 0; break;
                         }
                         if (picId == 0)
@@ -101,11 +109,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                         line = reader.readLine();
                         countLine++;
                         wordsView.setText(line);
+                        RunAnimation(wordsView);
                     }
                     else {
                         wordsView.setText(line);
+                        RunAnimation(wordsView);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -123,4 +132,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         editor.apply();
         super.onDestroy();
     }
+
+    private void RunAnimation(TextView tv)
+    {
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.scale);
+        a.reset();
+        tv.clearAnimation();
+        tv.startAnimation(a);
+    }
+
 }
