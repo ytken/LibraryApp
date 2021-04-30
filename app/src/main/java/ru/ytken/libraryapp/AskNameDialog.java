@@ -14,9 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.lang.ref.WeakReference;
+
 public class AskNameDialog extends DialogFragment {
     private EditText editName;
     SharedPreferences sPref; SharedPreferences.Editor editor;
+
 
     public AskNameDialog(SharedPreferences sPref) {
         this.sPref = sPref;
@@ -40,8 +43,8 @@ public class AskNameDialog extends DialogFragment {
         createProjectAlert.setView(view)
                 .setPositiveButton(R.string.setname, (dialog, id) -> {
                     editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), editName.getText().toString());
-                    Log.d(getResources().getString(R.string.LOG_TAG), "putting "+getResources().getString(R.string.TAG_CHAR_NAME) + " " + editName.getText().toString());
                     editor.apply();
+
                     onFinalListener.sendSignal();
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> {
@@ -58,13 +61,4 @@ public class AskNameDialog extends DialogFragment {
         super.onAttach(context);
         onFinalListener = (OnFinalListener) getActivity();
     }
-
-    /*private void launchActivity() {
-        Intent myIntent = new Intent(getActivity(), StoryFirstActivity.class);
-        String name = sPref.getString(getResources().getString(R.string.TAG_CHAR_NAME),"");
-        String sex = sPref.getString(getResources().getString(R.string.TAG_CHAR_SEX),"");
-        myIntent.putExtra("name", name);
-        myIntent.putExtra("sex", sex);
-        startActivity(myIntent);
-    }*/
 }

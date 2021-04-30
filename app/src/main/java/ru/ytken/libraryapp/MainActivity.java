@@ -49,10 +49,12 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getId()) {
                 case 1:
                     if (name.isEmpty()) {
+                        Log.d( "order","StoryFirstSetNameActivity from MainActivity");
                         Intent myIntent = new Intent(MainActivity.this, StoryFirstSetNameActivity.class);
                         MainActivity.this.startActivityForResult(myIntent,1);
                     }
                     else {
+                        Log.d( "order","StoryFirstActivity from MainActivity");
                         Intent myIntent = new Intent(MainActivity.this, StoryFirstActivity.class);
                         myIntent.putExtra("name", name);
                         myIntent.putExtra("sex", sex);
@@ -68,11 +70,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent myIntent = new Intent(MainActivity.this, StoryFirstActivity.class);
-        String name = sPref.getString(getResources().getString(R.string.TAG_CHAR_NAME),"");
-        String sex = sPref.getString(getResources().getString(R.string.TAG_CHAR_SEX),"");
-        myIntent.putExtra("name", name);
-        myIntent.putExtra("sex", sex);
-        MainActivity.this.startActivity(myIntent);
+        if(resultCode == RESULT_OK) {
+            Intent myIntent = new Intent(MainActivity.this, StoryFirstActivity.class);
+            String name = sPref.getString(getResources().getString(R.string.TAG_CHAR_NAME),"");
+            String sex = sPref.getString(getResources().getString(R.string.TAG_CHAR_SEX),"");
+            myIntent.putExtra("name", name);
+            myIntent.putExtra("sex", sex);
+            MainActivity.this.startActivity(myIntent);
+        }
     }
 }

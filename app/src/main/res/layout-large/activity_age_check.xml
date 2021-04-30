@@ -14,20 +14,20 @@
 
     <Button
         android:id="@+id/buttonSetDate"
-        android:layout_width="205dp"
-        android:layout_height="113dp"
+        android:layout_width="216dp"
+        android:layout_height="71dp"
         android:layout_below="@+id/textAgeDate"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/primaryPurple"
         android:fontFamily="@font/marta"
         android:text="Принять"
         android:textColor="@color/primaryWhite"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/datePicker"
+        android:textSize="@dimen/names_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/editTextSetDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textAgeDate"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.521" />
 
     <TextView
         android:id="@+id/textAgeDate"
@@ -35,28 +35,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="352dp"
         android:fontFamily="@font/marta"
         android:gravity="center"
         android:text="BirthDate"
-        android:textSize="@dimen/words_text_size"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        app:layout_constraintBottom_toTopOf="@+id/datePicker"
+        android:textColor="@color/primaryBlack"
+        android:textSize="@dimen/words_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonSetDate"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:foregroundGravity="center"
+    <EditText
+        android:id="@+id/editTextSetDate"
+        style="@style/MyDatePicker"
+        android:layout_width="265dp"
+        android:layout_height="82dp"
+        android:gravity="center"
+        android:hint="дд.мм.гггг"
+        android:inputType="date"
+        android:textColor="@color/primaryBlack"
+        android:textSize="@dimen/words_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.753" />
+        app:layout_constraintVertical_bias="0.656" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

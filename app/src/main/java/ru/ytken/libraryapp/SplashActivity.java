@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,29 +54,33 @@ public class SplashActivity extends AppCompatActivity {
         Button changingDateButton = findViewById(R.id.buttonSetDate);
         changingDateButton.setOnClickListener(v -> {
             String dateBirth = editTextSetBirthdate.getText().toString();
-            day = Integer.parseInt(dateBirth.substring(0,1));
-            month = Integer.parseInt(dateBirth.substring(3,4));
-            year = Integer.parseInt(dateBirth.substring(6));
-            if ((year >= 1900) && (year <= today.get(Calendar.YEAR)) && (month <= 12) && (day <= 31)) {
-                age = getAge(year, month, day);
-                if ((month == today.get(Calendar.MONTH)+1) && (day < today.get(Calendar.DAY_OF_MONTH)) || (month == today.get(Calendar.MONTH)))
-                    age ++;
-                if (age >= 18) {
-                    editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), age);
-                    editor.apply();
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+            if(Pattern.matches("\\d{2}\\.\\d{2}\\.\\d{4}", dateBirth)) {
+                day = Integer.parseInt(dateBirth.substring(0,2));
+                month = Integer.parseInt(dateBirth.substring(3,5));
+                year = Integer.parseInt(dateBirth.substring(6));
+                if ((year >= 1900) && (year <= today.get(Calendar.YEAR)) && (month <= 12) && (day <= 31)) {
+                    age = getAge(year, month, day);
+                    if ((month == today.get(Calendar.MONTH)+1) && (day < today.get(Calendar.DAY_OF_MONTH)) || (month == today.get(Calendar.MONTH)))
+                        age ++;
+                    if (age >= 18) {
+                        editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), age);
+                        editor.apply();
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        DialogFragment dialog = new DialogExit();
+                        dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                    }
                 }
                 else {
-                    DialogFragment dialog = new DialogExit();
-                    dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                    Toast.makeText(SplashActivity.this, "Неверная дата!", Toast.LENGTH_SHORT).show();
                 }
             }
             else {
-                Toast.makeText(SplashActivity.this, "Wrong date!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashActivity.this, "Введите корректную дату", Toast.LENGTH_SHORT).show();
             }
-
         });
 
     }

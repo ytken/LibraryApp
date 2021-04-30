@@ -51,6 +51,13 @@ public class StoryFirstSetNameActivity extends AppCompatActivity implements AskN
 
     @Override
     public void sendSignal() {
+        setResult(RESULT_OK);
         this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        setResult(RESULT_CANCELED);
+        super.onDestroy();
     }
 }
