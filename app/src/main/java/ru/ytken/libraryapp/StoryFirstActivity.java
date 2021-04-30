@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 
 import java.io.BufferedReader;
@@ -33,7 +35,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     TextView wordsView;
     BufferedReader reader;
     InputStream inputStream;
-    SharedPreferences sPref; SharedPreferences.Editor editor;
+    static SharedPreferences sPref; static SharedPreferences.Editor editor;
     int countLine = 0;
 
     @Override
@@ -58,8 +60,21 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         wordsView = findViewById(R.id.textWords);
         reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
-        DialogFragment dialog = new DialogContinueGame(sPref, reader, backgr, wordsView);
-        dialog.show(getSupportFragmentManager(), "Dialog Continue Game");
+        if (sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0) > 1){
+            DialogFragment dialog = new DialogContinueGame(sPref, reader, backgr, wordsView);
+            dialog.show(getSupportFragmentManager(), "Dialog Continue Game");
+        }
+        else {
+            countLine = 1;
+            backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(),R.drawable.black_screen, null));
+            try {
+                line = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (!line.isEmpty())
+                wordsView.setText(line);
+        }
     }
 
     public void setCountLine(int countLine) { this.countLine = countLine; }
@@ -67,7 +82,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.imageBackgr:
             case R.id.imageWords:
                 try {
@@ -89,9 +103,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                         wordsView.setVisibility(View.INVISIBLE);
 
                         if (picId == 0)
-                            backgr.setImageDrawable(getResources().getDrawable(R.drawable.black_screen));
+                            backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
                         else
-                            backgr.setImageDrawable(getResources().getDrawable(picId));
+                            backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), picId, null));
                         line = reader.readLine();
 
                         RunAnimation(backgr);

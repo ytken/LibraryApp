@@ -78,7 +78,7 @@ public class DialogContinueGame extends DialogFragment {
                     editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
                     editor.apply();
                     countLine = 1;
-                    backgr.setImageDrawable(getResources().getDrawable(R.drawable.black_screen));
+                    backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
                     try {
                         line = reader.readLine();
                     } catch (IOException e) {

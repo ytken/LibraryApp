@@ -2,6 +2,7 @@ package ru.ytken.libraryapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent myIntent = new Intent(MainActivity.this, StoryFirstActivity.class);
                         myIntent.putExtra("name", name);
                         myIntent.putExtra("sex", sex);
-                        MainActivity.this.startActivity(myIntent);
+                        MainActivity.this.startActivityForResult(myIntent, 2);
                     }
                     break;
                 default:
@@ -70,13 +71,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
+        if((requestCode == 1)&&(resultCode == RESULT_OK)) {
             Intent myIntent = new Intent(MainActivity.this, StoryFirstActivity.class);
             String name = sPref.getString(getResources().getString(R.string.TAG_CHAR_NAME),"");
             String sex = sPref.getString(getResources().getString(R.string.TAG_CHAR_SEX),"");
             myIntent.putExtra("name", name);
             myIntent.putExtra("sex", sex);
             MainActivity.this.startActivity(myIntent);
+        }
+        if(requestCode == 2) {
+            DialogFragment dialog = new DialogSaving(StoryFirstActivity.editor);
+            dialog.show(getSupportFragmentManager(), "Dialog Exit");
         }
     }
 }
