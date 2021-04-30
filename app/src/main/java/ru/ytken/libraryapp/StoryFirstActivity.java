@@ -1,7 +1,10 @@
 package ru.ytken.libraryapp;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Process;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -10,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +29,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     String line = "";
     int picId, textId;
     View view;
-    Button refreshPrefs;
     ImageView imageView, backgr;
     TextView wordsView;
     BufferedReader reader;
@@ -51,41 +56,18 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         else
             textId = R.raw.woman_author_1;
 
-        inputStream = getResources().openRawResource(textId);
         wordsView = findViewById(R.id.textWords);
-        reader = new BufferedReader(new InputStreamReader(inputStream));
-        countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
-        for (int i = 0; i < countLine; i++) {
-            try {
-                line = reader.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        //editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
-        //editor.apply();
-        picId = sPref.getInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
-        if (picId == 0)
-            backgr.setImageDrawable(getResources().getDrawable(R.drawable.black_screen));
-        else
-            backgr.setImageDrawable(getResources().getDrawable(picId));
-        if (!line.isEmpty())
-            wordsView.setText(line);
-        refreshPrefs = findViewById(R.id.buttonRefresh);
-        refreshPrefs.setOnClickListener(this);
+        reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
+        DialogFragment dialog = new DialogContinueGame(sPref, reader, backgr, wordsView);
+        dialog.show(getSupportFragmentManager(), "Dialog Continue Game");
     }
+
+    public void setCountLine(int countLine) { this.countLine = countLine; }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buttonRefresh:
-                editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
-                editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), -1);
-                editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
-                editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
-                editor.apply();
-                Toast.makeText(StoryFirstActivity.this, "Данные обновлены", Toast.LENGTH_SHORT).show();
-                break;
+
             case R.id.imageBackgr:
             case R.id.imageWords:
                 try {

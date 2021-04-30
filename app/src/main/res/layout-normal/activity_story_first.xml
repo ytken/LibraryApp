@@ -20,14 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="fitXY"
         app:srcCompat="@color/primaryWhite" />
-    <Button
-        android:id="@+id/buttonRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Refresh prefs"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageWords"
