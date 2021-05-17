@@ -35,10 +35,10 @@
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
+        app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758"
+        app:layout_constraintVertical_bias="0.67"
         app:srcCompat="@drawable/lia_full_lar" />
 
     <ImageButton
@@ -48,10 +48,10 @@
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintHorizontal_bias="0.889"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.857"
+        app:layout_constraintVertical_bias="0.687"
         app:srcCompat="@drawable/charlie_full_lar" />
 
     <TextView
@@ -61,12 +61,12 @@
         android:fontFamily="@font/marta"
         android:gravity="center"
         android:text="Выберите своего персонажа"
-        android:textSize="@dimen/names_text_size"
+        android:textSize="@dimen/words_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/story_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.069" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

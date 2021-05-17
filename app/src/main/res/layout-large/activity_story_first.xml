@@ -3,10 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/primaryWhite"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,7 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/loading" />
+        app:srcCompat="@color/white"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/imageWords"
@@ -32,7 +29,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.609"
-        app:srcCompat="@drawable/words_author" />
+        app:srcCompat="@drawable/words_author"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/textWords"
@@ -44,6 +42,7 @@
         android:padding="25dp"
         android:text="@string/hint_click_first_story"
         android:textSize="@dimen/words_text_size"
+        android:textColor="@color/primaryBlack"
         app:layout_constraintBottom_toBottomOf="@+id/imageWords"
         app:layout_constraintEnd_toEndOf="@+id/imageWords"
         app:layout_constraintHorizontal_bias="0.617"

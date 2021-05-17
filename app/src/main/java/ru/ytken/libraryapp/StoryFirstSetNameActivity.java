@@ -23,18 +23,13 @@ public class StoryFirstSetNameActivity extends AppCompatActivity implements AskN
         backButton.setImageDrawable(res.getDrawable(R.drawable.button_back));
         backButton.setOnClickListener(v -> finish());
 
-        imageBackground = findViewById(R.id.story_image);
-        imageBackground.setImageDrawable(res.getDrawable(R.drawable.char_choice));
-
         buttonWoman = findViewById(R.id.button_woman);
-        buttonWoman.setImageDrawable(res.getDrawable(R.drawable.words_left_pers));
         buttonWoman.setOnClickListener(v -> {
             launchDialog(res.getString(R.string.main_woman_name), "W");
         });
 
 
         buttonMan = findViewById(R.id.button_man);
-        buttonMan.setImageDrawable(res.getDrawable(R.drawable.words_right_pers));
         buttonMan.setOnClickListener(v -> {
             launchDialog(res.getString(R.string.main_man_name), "M");
         });

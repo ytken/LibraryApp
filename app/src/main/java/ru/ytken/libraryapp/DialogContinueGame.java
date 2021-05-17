@@ -1,7 +1,9 @@
 package ru.ytken.libraryapp;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -22,62 +24,45 @@ public class DialogContinueGame extends DialogFragment {
     String line, pic;
     BufferedReader reader;
     SharedPreferences sPref; SharedPreferences.Editor editor;
-    ImageView backgr;
-    TextView wordsView;
+    private Removable removable;
 
-    public DialogContinueGame(SharedPreferences sPref, BufferedReader reader, ImageView backgr, TextView wordsView) {
+    public DialogContinueGame(SharedPreferences sPref, BufferedReader reader) {
         this.sPref = sPref;
-        this.backgr = backgr;
-        this.wordsView = wordsView;
         this.reader = reader;
         editor = sPref.edit();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        removable = (Removable) context;
+    }
+
+    public interface Removable {
+        void remove();
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        StoryFirstActivity activity = (StoryFirstActivity) getActivity();
         return new AlertDialog.Builder(getContext())
                 .setTitle("Отказ")
                 .setMessage("Продолжить последнюю игру?")
                 .setPositiveButton("Да", (dialog, which) -> {
-                    line = ""; pic = "";
-                    countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
-                    for (int i = 0; i < countLine; i++) {
-                        try {
-                            line = reader.readLine();
-                            Log.d("listtext", line);
-                            if (line.contains("Image"))
-                                pic = line.substring(6);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    //editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
-                    //editor.apply();
-                    switch (pic) {
-                        case "house": picId = R.drawable.main_pers_house; break;
-                        case "purple": picId = R.drawable.purple_flash; break;
-                        case "black": picId = R.drawable.black_screen; break;
-                        case "white": picId = R.drawable.while_flash; break;
-                        case "smoke": picId = R.drawable.smoke; break;
-                        case "workshop": picId = R.drawable.royal_workshop; break;
-                        case "bomb": picId = R.drawable.bomb_town; break;
-                        default: picId = 0; break;
-                    }
-                    if (picId == 0)
-                        backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
-                    else
-                        backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), picId, null));
-                    if (!line.isEmpty())
-                        wordsView.setText(line);
-                    activity.setCountLine(countLine);
                 })
                 .setNegativeButton("Начать новую", (dialog, which) -> {
                     editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
                     editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
+                    editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
                     editor.apply();
-                    countLine = 1;
+                    removable.remove();
+                })
+                .create();
+    }
+}
+
+/*negative
+countLine = 1;
                     backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
                     try {
                         line = reader.readLine();
@@ -86,8 +71,4 @@ public class DialogContinueGame extends DialogFragment {
                     }
                     if (!line.isEmpty())
                         wordsView.setText(line);
-                    activity.setCountLine(countLine);
-                })
-                .create();
-    }
-}
+                    activity.setCountLine(countLine);*/

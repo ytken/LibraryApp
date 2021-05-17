@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="fitXY"
-        app:srcCompat="@color/primaryWhite" />
+        app:srcCompat="@drawable/loading" />
 
     <ImageView
         android:id="@+id/imageWords"

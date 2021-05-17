@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recycler;
     ImageButton buttonBack;
     SharedPreferences sPref;
+    RecAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recycler.setLayoutManager(layoutManager);
-        RecAdapter adapter = new RecAdapter(new MyListener());
+        adapter = new RecAdapter(new MyListener());
         recycler.setAdapter(adapter);
 
         buttonBack = findViewById(R.id.buttonBack);
@@ -80,8 +81,13 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.startActivity(myIntent);
         }
         if(requestCode == 2) {
-            DialogFragment dialog = new DialogSaving(StoryFirstActivity.editor);
-            dialog.show(getSupportFragmentManager(), "Dialog Exit");
+            if (resultCode == RESULT_OK) {
+                DialogFragment dialog = new DialogSaving(StoryFirstActivity.editor);
+                dialog.show(getSupportFragmentManager(), "Dialog Exit");
+            }
+            if (resultCode == RESULT_CANCELED) {
+                adapter.onStoryClicked(1);
+            }
         }
     }
 }
