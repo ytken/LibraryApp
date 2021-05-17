@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class StoryFirstActivity extends FragmentActivity implements View.OnClickListener, DialogContinueGame.Removable {
+public class StoryFirstActivity extends AppCompatActivity implements View.OnClickListener, DialogContinueGame.Removable {
 
     String line = "";
     int picId, textId;
@@ -147,7 +147,7 @@ public class StoryFirstActivity extends FragmentActivity implements View.OnClick
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),countLine);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), picId);
         editor.apply();
-        setResult(RESULT_OK);
+        StoryFirstActivity.this.setResult(RESULT_CANCELED);
         super.onDestroy();
     }
 
@@ -161,7 +161,8 @@ public class StoryFirstActivity extends FragmentActivity implements View.OnClick
 
     @Override
     public void remove() {
+        Log.d("wai", "remove");
+        setResult(RESULT_OK);
         this.finish();
-        setResult(RESULT_CANCELED);
     }
 }

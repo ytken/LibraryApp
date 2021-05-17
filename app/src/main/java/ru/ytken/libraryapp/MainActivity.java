@@ -81,12 +81,12 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.startActivity(myIntent);
         }
         if(requestCode == 2) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_CANCELED) {
                 DialogFragment dialog = new DialogSaving(StoryFirstActivity.editor);
                 dialog.show(getSupportFragmentManager(), "Dialog Exit");
             }
-            if (resultCode == RESULT_CANCELED) {
-                adapter.onStoryClicked(1);
+            if (resultCode == RESULT_OK) {
+                adapter.onStoryClicked(0);
             }
         }
     }
