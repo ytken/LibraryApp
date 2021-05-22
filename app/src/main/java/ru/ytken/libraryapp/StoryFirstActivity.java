@@ -162,10 +162,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             wordsView.setVisibility(View.GONE);
                             imageView.setVisibility(View.GONE);
                             clicker.setVisibility(View.VISIBLE);
+                            parseDialog(); parseDialog();
                             clicker.setOnClickListener(v1 -> {
-                                Log.d("dialogWords", "clicker");
                                 try {
-                                    Log.d("dialogWords", "clicker");
                                     parseDialog();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -188,7 +187,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             }
                         }
                         if (!(line.contains("Dialog") || line.contains("Image"))) {
-                            Log.d("nonono", "setting text");
                             wordsView.setText(line);
                             RunAnimation(wordsView);
                         }
@@ -204,6 +202,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     void parseDialog() throws IOException {
         Log.d("dialogWords", "In Dialog " + lineDialog);
         if (lineDialog.contains(nickname)) {
+            imageRightView.setVisibility(View.INVISIBLE);
+            wordsRightView.setVisibility(View.INVISIBLE);
             imageLeftView.setVisibility(View.VISIBLE);
             wordsLeftView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
@@ -213,6 +213,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         }
         else if (lineDialog.contains("Choice")) {
             try {
+                imageLeftView.setVisibility(View.GONE);
+                wordsLeftView.setVisibility(View.GONE);
+                imageRightView.setVisibility(View.GONE);
+                wordsRightView.setVisibility(View.GONE);
                 handleChoice();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -222,9 +226,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         else if (talking) { Log.d("dialogWords", "In case talking " + lineDialog);
             talkingText.setText(lineDialog);}
         else {
+            imageLeftView.setVisibility(View.INVISIBLE);
+            wordsLeftView.setVisibility(View.INVISIBLE);
             imageRightView.setVisibility(View.VISIBLE);
             wordsRightView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
+            Log.d("dialogWords", "In case some perso " + lineDialog);
             wordsRightView.setText(lineDialog);
             talking = true;
             talkingText = wordsRightView;
@@ -241,6 +248,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         lineDialog = readerDialog.readLine();
         if (lineDialog.contains("1)")) {
             textLeftChoice.setText(lineDialog);
+            Log.d("dialogChoice", "set left choice " + lineDialog);
             while (!lineDialog.isEmpty()) {
                 lineChoice1 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
@@ -250,25 +258,37 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         }
         if (lineDialog.contains("2)")) {
             textRightChoice.setText(lineDialog);
+            Log.d("dialogChoice", "set right choice " + lineDialog);
             while (!lineDialog.isEmpty()) {
                 lineChoice2 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
             }
             Log.d("dialogChoice", lineChoice2);
         }
+
+        buttonLeftChoice.setVisibility(View.VISIBLE);
+        textLeftChoice.setVisibility(View.VISIBLE);
         buttonLeftChoice.setOnClickListener(v -> {
-            parseChoiceAction(lineChoice1);
+            parseChoiceAction(lineChoice1.substring(lineChoice1.indexOf("\n")+1));
         });
-        buttonLeftChoice.setOnClickListener(v -> {
-            parseChoiceAction(lineChoice2);
+
+        buttonRightChoice.setVisibility(View.VISIBLE);
+        textRightChoice.setVisibility(View.VISIBLE);
+        buttonRightChoice.setOnClickListener(v -> {
+            parseChoiceAction(lineChoice2.substring(lineChoice2.indexOf("\n")+1));
         });
     }
 
     void parseChoiceAction(String textAction) {
-
-        textAction = textAction.substring(textAction.indexOf("\n"));
+        buttonLeftChoice.setVisibility(View.GONE);
+        textLeftChoice.setVisibility(View.GONE);
+        buttonRightChoice.setVisibility(View.GONE);
+        textRightChoice.setVisibility(View.GONE);
+        textAction = textAction.substring(textAction.indexOf("\n")+1);
         String line = textAction.substring(0,textAction.indexOf("\n"));
-        if(!(line.contains(" "))){
+        Log.d("dialogChoice","line " + line);
+        Log.d("dialogChoice","textAction " + textAction);
+        if(line.contains(" ")){
             switch (line.substring(0,line.indexOf(" "))) {
                 case "отвага":
                 case "решительность":
