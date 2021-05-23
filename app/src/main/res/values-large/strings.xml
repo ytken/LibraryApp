@@ -2,5 +2,5 @@
 <resources>
     <dimen name="words_text_size">45sp</dimen>
     <dimen name="names_text_size">30sp</dimen>
-
+    <dimen name="choice_text_size">10sp</dimen>
 </resources>

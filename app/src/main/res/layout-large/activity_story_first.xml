@@ -156,7 +156,7 @@
         android:layout_width="136dp"
         android:layout_height="63dp"
         android:fontFamily="@font/marta"
-        android:textSize="@dimen/names_text_size"
+        android:textSize="@dimen/choice_text_size"
         android:textColor="@color/primaryBlack"
         android:gravity="center"
         android:elevation="9dp"
@@ -173,7 +173,7 @@
         android:layout_width="136dp"
         android:layout_height="63dp"
         android:fontFamily="@font/marta"
-        android:textSize="@dimen/names_text_size"
+        android:textSize="@dimen/choice_text_size"
         android:textColor="@color/primaryBlack"
         android:gravity="center"
         android:elevation="9dp"
@@ -183,6 +183,13 @@
         app:layout_constraintStart_toStartOf="@+id/imageButtonRightChoice"
         app:layout_constraintTop_toTopOf="@+id/imageButtonRightChoice"
         app:layout_constraintVertical_bias="0.557"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/clickerInner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="15dp"
         android:visibility="gone"/>
 
 
