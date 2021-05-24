@@ -15,8 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="fitXY"
-        app:srcCompat="@color/white"
-        android:contentDescription="TODO" />
+        app:srcCompat="@color/white" />
 
     <ImageView
         android:id="@+id/imageWords"
@@ -29,8 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.609"
-        app:srcCompat="@drawable/words_author"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/words_author" />
 
     <TextView
         android:id="@+id/textWords"
@@ -54,6 +52,7 @@
         android:id="@+id/imageViewLeft"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +67,7 @@
         android:fontFamily="@font/marta"
         android:textSize="@dimen/names_text_size"
         android:gravity="center"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.479"
@@ -192,5 +192,24 @@
         android:elevation="15dp"
         android:visibility="gone"/>
 
+    <ImageView
+        android:id="@+id/imageViewMan"
+        android:layout_width="379dp"
+        android:layout_height="1280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/charlie_full_lar"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/imageViewWoman"
+        android:layout_width="379dp"
+        android:layout_height="1280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/lia_full_lar"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
