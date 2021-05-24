@@ -27,7 +27,7 @@ import java.io.InputStreamReader;
 
 public class StoryFirstActivity extends AppCompatActivity implements View.OnClickListener, DialogContinueGame.Removable {
 
-    String line = "", lineDialog = "", lineChoice = "", lineChoice1 = "", lineChoice2 = "", nickname = "", wordsPers = "***", namePersoTalk = "", textChoice = "";
+    String line = "", lineDialog = "", lineChoice1 = "", lineChoice2 = "", nickname = "", wordsPers = "***", namePersoTalk = "", textChoice = "", modeGame="";
     int picId, textId, textDialogId;
     ImageButton buttonLeftChoice, buttonRightChoice;
     ImageView imageView, imageLeftView, imageRightView, backgr;
@@ -154,15 +154,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     countLine++;
                     if (line.contains("Image")) {
                         setBackgrIm(line);
-                        imageView.setVisibility(View.INVISIBLE);
-                        wordsView.setVisibility(View.INVISIBLE);
+                        OffAnimation(imageView);
+                        OffAnimation(wordsView);
                         RunAnimation(backgr);
                         countLine++;
                     }
                     else
                         if(line.contains("Dialog")) {
-                            wordsView.setVisibility(View.GONE);
-                            imageView.setVisibility(View.GONE);
+                            OffAnimation(imageView);
+                            OffAnimation(wordsView);
                             clicker.setVisibility(View.VISIBLE);
                             parseDialog(); parseDialog();
                             clicker.setOnClickListener(v1 -> {
@@ -173,10 +173,22 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                                 }
                                 if (lineDialog.contains("---------")) {
                                     clicker.setVisibility(View.GONE);
-                                    imageLeftView.setVisibility(View.INVISIBLE);
-                                    wordsLeftView.setVisibility(View.INVISIBLE);
-                                    imageRightView.setVisibility(View.INVISIBLE);
-                                    wordsRightView.setVisibility(View.INVISIBLE);
+                                    if (imageLeftView.getVisibility()==View.VISIBLE) {
+                                        OffAnimation(imageLeftView);
+                                        OffAnimation(wordsLeftView);
+                                    }
+                                    if (imageRightView.getVisibility()==View.VISIBLE) {
+                                        OffAnimation(imageRightView);
+                                        OffAnimation(wordsRightView);
+                                    }
+                                    nameSpeakerView.setVisibility(View.INVISIBLE);
+                                    Log.d("dialogChoice", "finish dialog");
+                                    try {
+                                        lineDialog = readerDialog.readLine();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Log.d("dialogChoice", lineDialog);
                                 }
                             });
 
@@ -204,21 +216,29 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     void parseDialog() throws IOException {
         Log.d("dialogWords", "In Dialog " + lineDialog);
         if (lineDialog.contains(nickname)) {
-            imageRightView.setVisibility(View.INVISIBLE);
-            wordsRightView.setVisibility(View.INVISIBLE);
+            nameSpeakerView.setVisibility(View.VISIBLE);
+            nameSpeakerView.setText(lineDialog);
+            OffAnimation(imageRightView);
+            OffAnimation(wordsRightView);
             imageLeftView.setVisibility(View.VISIBLE);
+            RunAnimation(imageLeftView);
             wordsLeftView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
+            Log.d("readDialog","1");
             wordsLeftView.setText(lineDialog);
+            RunAnimation(wordsLeftView);
             talking = true;
             talkingText = wordsLeftView;
         }
         else if (lineDialog.contains("Choice")) {
             try {
-                imageLeftView.setVisibility(View.GONE);
-                wordsLeftView.setVisibility(View.GONE);
-                imageRightView.setVisibility(View.GONE);
-                wordsRightView.setVisibility(View.GONE);
+                modeGame = "Choice";
+                imageLeftView.setVisibility(View.INVISIBLE);
+                wordsLeftView.setVisibility(View.INVISIBLE);
+                imageRightView.setVisibility(View.INVISIBLE);
+                wordsRightView.setVisibility(View.INVISIBLE);
+                nameSpeakerView.setVisibility(View.INVISIBLE);
+                talking=false;
                 handleChoice();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -226,20 +246,28 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         }
         else if (lineDialog.isEmpty()) {talking = false;}
         else if (talking) { Log.d("dialogWords", "In case talking " + lineDialog);
-            talkingText.setText(lineDialog);}
+            talkingText.setText(lineDialog); RunAnimation(talkingText);}
+        else if (lineDialog.contains("------")){}
         else {
+            nameSpeakerView.setVisibility(View.VISIBLE);
+            nameSpeakerView.setText(lineDialog);
             imageLeftView.setVisibility(View.INVISIBLE);
             wordsLeftView.setVisibility(View.INVISIBLE);
             imageRightView.setVisibility(View.VISIBLE);
+            RunAnimation(imageRightView);
             wordsRightView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
+            Log.d("readDialog","2");
             Log.d("dialogWords", "In case some perso " + lineDialog);
             wordsRightView.setText(lineDialog);
+            RunAnimation(wordsRightView);
             talking = true;
             talkingText = wordsRightView;
         }
+        if (!(modeGame.contains("Choice")))
         try {
             lineDialog = readerDialog.readLine();
+            Log.d("readDialog","3 " + lineDialog);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -248,15 +276,18 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     void handleChoice() throws IOException {
         lineDialog = readerDialog.readLine();
+        Log.d("readDialog","4 " + lineDialog);
         if (lineDialog.contains("1)")) {
             textLeftChoice.setText(lineDialog);
             Log.d("dialogChoice", "set left choice " + lineDialog);
             while (!lineDialog.isEmpty()) {
                 lineChoice1 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
+                Log.d("readDialog","5");
             }
             lineChoice1 += "\n";
             lineDialog = readerDialog.readLine();
+            Log.d("readDialog","6");
             Log.d("dialogChoice", lineChoice1);
         }
         if (lineDialog.contains("2)")) {
@@ -265,25 +296,33 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             while (!lineDialog.isEmpty()) {
                 lineChoice2 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
+                Log.d("readDialog","7");
             }
             lineChoice2 += "\n";
             Log.d("dialogChoice", lineChoice2);
         }
 
         buttonLeftChoice.setVisibility(View.VISIBLE);
+        RunAnimation(buttonLeftChoice);
         textLeftChoice.setVisibility(View.VISIBLE);
+        RunAnimation(textLeftChoice);
         buttonLeftChoice.setOnClickListener(v -> {
             parseChoiceAction(lineChoice1.substring(lineChoice1.indexOf("\n")+1));
         });
 
         buttonRightChoice.setVisibility(View.VISIBLE);
+        RunAnimation(buttonRightChoice);
         textRightChoice.setVisibility(View.VISIBLE);
+        RunAnimation(textRightChoice);
         buttonRightChoice.setOnClickListener(v -> {
             parseChoiceAction(lineChoice2.substring(lineChoice2.indexOf("\n")+1));
         });
     }
 
     void parseChoiceAction(String textAction) {
+        lineChoice1=""; lineChoice2="";
+        wordsPers = "***";
+        modeGame = "";
         textChoice = textAction;
         buttonLeftChoice.setVisibility(View.GONE);
         textLeftChoice.setVisibility(View.GONE);
@@ -298,7 +337,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 case "внимательность":
                 case "стойкость":
                     Toast.makeText(this,namePersoTalk, Toast.LENGTH_SHORT).show();
-                    textChoice = textChoice.substring(textChoice.indexOf("\n"));
+                    textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
+                    Log.d("lineChoice", "namePersoTalk: " + namePersoTalk + "textChoice: " + textChoice);
                     break;
                 default: break;
             }
@@ -308,41 +348,59 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             if (textChoice.isEmpty()) {
                 Log.d("dialogChoice", "closing clickerInner");
                 clickerInner.setVisibility(View.GONE);
-                imageLeftView.setVisibility(View.INVISIBLE);
-                wordsLeftView.setVisibility(View.INVISIBLE);
-                imageRightView.setVisibility(View.INVISIBLE);
-                wordsRightView.setVisibility(View.INVISIBLE);
+                if (imageLeftView.getVisibility()==View.VISIBLE) {
+                    OffAnimation(imageLeftView);
+                    OffAnimation(wordsLeftView);
+                }
+                if (imageRightView.getVisibility()==View.VISIBLE) {
+                    OffAnimation(imageRightView);
+                    OffAnimation(wordsRightView);
+                }
+                nameSpeakerView.setVisibility(View.INVISIBLE);
             }
             else {
                 if (wordsPers.contains("***")) {
+                    nameSpeakerView.setVisibility(View.VISIBLE);
                     namePersoTalk = textChoice.substring(0, textChoice.indexOf("\n"));
+                    nameSpeakerView.setText(namePersoTalk);
                     textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
                     wordsPers = textChoice.substring(0, textChoice.indexOf("\n"));
                     textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
                     if (namePersoTalk.contains(nickname)) {
-                        imageRightView.setVisibility(View.INVISIBLE);
-                        wordsRightView.setVisibility(View.INVISIBLE);
+                        if(imageRightView.getVisibility()==View.VISIBLE) {
+                            OffAnimation(imageRightView);
+                            OffAnimation(wordsRightView);
+                        }
                         imageLeftView.setVisibility(View.VISIBLE);
+                        RunAnimation(imageLeftView);
                         wordsLeftView.setVisibility(View.VISIBLE);
                         wordsLeftView.setText(wordsPers);
+                        RunAnimation(wordsLeftView);
                     } else {
-                        imageLeftView.setVisibility(View.INVISIBLE);
-                        wordsLeftView.setVisibility(View.INVISIBLE);
+                        if (imageLeftView.getVisibility() == View.VISIBLE) {
+                            OffAnimation(imageLeftView);
+                            OffAnimation(wordsLeftView);
+                        }
                         imageRightView.setVisibility(View.VISIBLE);
+                        RunAnimation(imageRightView);
                         wordsRightView.setVisibility(View.VISIBLE);
                         wordsRightView.setText(wordsPers);
+                        RunAnimation(wordsRightView);
                     }
                 } else {
                     if (namePersoTalk.contains(nickname))
                         wordsLeftView.setText(wordsPers);
                     else
                         wordsRightView.setText(wordsPers);
+                }
+                if(textChoice.contains("\n")) {
                     wordsPers = textChoice.substring(0, textChoice.indexOf("\n"));
                     textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
                 }
                 Log.d("dialogChoice", "line: " + namePersoTalk + " words: " + wordsPers + "text: " + textChoice);
             }
         });
+        clickerInner.callOnClick();
     }
 
 
@@ -362,6 +420,14 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         a.reset();
         tv.clearAnimation();
         tv.startAnimation(a);
+    }
+
+    private void OffAnimation(View tv) {
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.scaleoff);
+        a.reset();
+        tv.clearAnimation();
+        tv.startAnimation(a);
+        tv.setVisibility(View.INVISIBLE);
     }
 
     @Override
