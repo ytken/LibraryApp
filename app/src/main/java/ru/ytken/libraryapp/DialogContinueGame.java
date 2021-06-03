@@ -52,6 +52,7 @@ public class DialogContinueGame extends DialogFragment {
                 })
                 .setNegativeButton("Начать новую", (dialog, which) -> {
                     editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
+                    editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE), 0);
                     editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
                     editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
                     editor.apply();

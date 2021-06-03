@@ -30,7 +30,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     String line = "", lineDialog = "", lineChoice1 = "", lineChoice2 = "", nickname = "", wordsPers = "***", namePersoTalk = "", textChoice = "", modeGame="";
     int picId, textId, textDialogId;
     ImageButton buttonLeftChoice, buttonRightChoice;
-    ImageView imageView, imageLeftView, imageRightView, backgr, imageGG;
+    ImageView imageView, imageLeftView, imageRightView, backgr, imageGG, imageChar;
     TextView wordsView, wordsLeftView, wordsRightView, nameSpeakerView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
     BufferedReader reader, readerDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
@@ -79,6 +79,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         nameSpeakerView = findViewById(R.id.textViewNameSpeaker);
         nameSpeakerView.setVisibility(View.INVISIBLE);
 
+        imageChar = findViewById(R.id.imageViewChar);
+
         clicker = findViewById(R.id.dialogClick);
         clickerInner = findViewById(R.id.clickerInner);
 
@@ -117,12 +119,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         if (countDialogLine > 1){
             for (int i = 0; i < countDialogLine; i++) {
-                try { lineDialog = readerDialog.readLine(); lineDialog = readerDialog.readLine();
-                    lineDialog = readerDialog.readLine();
-                    countLine+=2;}
+                try { lineDialog = readerDialog.readLine();
+                    countLine+=1;}
                 catch (IOException e) { e.printStackTrace(); }
             }
         }
+
+        Log.d("prefs","count dialog get " + countDialogLine + " with " + lineDialog);
     }
 
     void setBackgrIm(String name) {
@@ -168,7 +171,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                                 OffAnimation(wordsView);
                             }
                             clicker.setVisibility(View.VISIBLE);
-                            parseDialog(); parseDialog();
+                            parseDialog();
                             clicker.setOnClickListener(v1 -> {
                                 try {
                                     parseDialog();
@@ -202,6 +205,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                                 imageView.setVisibility(View.VISIBLE);
                                 RunAnimation(imageView);
                                 wordsView.setVisibility(View.VISIBLE);
+                                imageGG.setVisibility(View.INVISIBLE);
+                                imageChar.setVisibility(View.INVISIBLE);
                             }
                         }
                         if (!(line.contains("Dialog") || line.contains("Image"))) {
@@ -219,9 +224,47 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     void parseDialog() throws IOException {
         Log.d("dialogWords", "In Dialog " + lineDialog);
-        if (lineDialog.contains(nickname)) {
-            OffAnimation(imageRightView);
-            OffAnimation(wordsRightView);
+        if (lineDialog.contains(nickname))
+            setTalkingPerso(lineDialog);
+        else if (lineDialog.contains("Choice")) {
+            try {
+                modeGame = "Choice";
+                imageLeftView.setVisibility(View.INVISIBLE);
+                wordsLeftView.setVisibility(View.INVISIBLE);
+                imageRightView.setVisibility(View.INVISIBLE);
+                wordsRightView.setVisibility(View.INVISIBLE);
+                nameSpeakerView.setVisibility(View.INVISIBLE);
+                imageGG.setVisibility(View.INVISIBLE);
+                imageChar.setVisibility(View.INVISIBLE);
+                talking=false;
+                handleChoice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (lineDialog.contains("***")) {talking = false; lineDialog = readerDialog.readLine(); setTalkingPerso(lineDialog);}
+        else if (lineDialog.isEmpty()) {talking = false; imageGG.setVisibility(View.INVISIBLE); imageChar.setVisibility(View.INVISIBLE);}
+        else if (talking) { Log.d("dialogWords", "In case talking " + lineDialog);
+            talkingText.setText(lineDialog); RunAnimation(talkingText);}
+        else if (lineDialog.contains("------")){}
+        else
+            setTalkingPerso(lineDialog);
+        if (!(modeGame.contains("Choice")))
+        try {
+            lineDialog = readerDialog.readLine();
+            Log.d("readDialog","3 " + lineDialog);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        countDialogLine++;
+    }
+
+    void setTalkingPerso(String name) throws IOException {
+        if (name.contains(nickname)) {
+            if (imageRightView.getVisibility()==View.VISIBLE) {
+                OffAnimation(imageRightView);
+                OffAnimation(wordsRightView);
+            }
             imageLeftView.setVisibility(View.VISIBLE);
             RunAnimation(imageLeftView);
             wordsLeftView.setVisibility(View.VISIBLE);
@@ -231,29 +274,21 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             RunAnimation(wordsLeftView);
             talking = true;
             talkingText = wordsLeftView;
+            imageChar.setVisibility(View.INVISIBLE);
             imageGG.setVisibility(View.VISIBLE);
+            RunAnimation(imageGG);
         }
-        else if (lineDialog.contains("Choice")) {
-            try {
-                modeGame = "Choice";
-                imageLeftView.setVisibility(View.INVISIBLE);
-                wordsLeftView.setVisibility(View.INVISIBLE);
-                imageRightView.setVisibility(View.INVISIBLE);
-                wordsRightView.setVisibility(View.INVISIBLE);
-                nameSpeakerView.setVisibility(View.INVISIBLE);
-                talking=false;
-                handleChoice();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (lineDialog.isEmpty()) {talking = false; imageGG.setVisibility(View.INVISIBLE);}
-        else if (talking) { Log.d("dialogWords", "In case talking " + lineDialog);
-            talkingText.setText(lineDialog); RunAnimation(talkingText);}
-        else if (lineDialog.contains("------")){}
         else {
-            nameSpeakerView.setVisibility(View.VISIBLE);
-            nameSpeakerView.setText(lineDialog);
+            if (name.contains("Dad")) {
+                imageChar.setVisibility(View.VISIBLE);
+                RunAnimation(imageChar);
+                nameSpeakerView.setVisibility(View.INVISIBLE);
+            }
+            else {
+                nameSpeakerView.setVisibility(View.VISIBLE);
+                nameSpeakerView.setText(name);
+            }
+            imageGG.setVisibility(View.INVISIBLE);
             imageLeftView.setVisibility(View.INVISIBLE);
             wordsLeftView.setVisibility(View.INVISIBLE);
             imageRightView.setVisibility(View.VISIBLE);
@@ -267,14 +302,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             talking = true;
             talkingText = wordsRightView;
         }
-        if (!(modeGame.contains("Choice")))
-        try {
-            lineDialog = readerDialog.readLine();
-            Log.d("readDialog","3 " + lineDialog);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        countDialogLine++;
     }
 
     void handleChoice() throws IOException {
@@ -354,6 +381,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 if (imageLeftView.getVisibility()==View.VISIBLE) {
                     OffAnimation(imageLeftView);
                     OffAnimation(wordsLeftView);
+                    //TODO OffAnimation(imageTalking);
                 }
                 if (imageRightView.getVisibility()==View.VISIBLE) {
                     OffAnimation(imageRightView);
@@ -385,8 +413,16 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             OffAnimation(wordsLeftView);
                             imageGG.setVisibility(View.INVISIBLE);
                         }
-                        nameSpeakerView.setVisibility(View.VISIBLE);
-                        nameSpeakerView.setText(namePersoTalk);
+                        if (namePersoTalk.contains("Dad")) {
+                            imageChar.setVisibility(View.VISIBLE);
+                            RunAnimation(imageChar);
+                            nameSpeakerView.setVisibility(View.INVISIBLE);
+                        }
+                        else {
+                            nameSpeakerView.setVisibility(View.VISIBLE);
+                            nameSpeakerView.setText(namePersoTalk);
+                        }
+                        imageGG.setVisibility(View.INVISIBLE);
                         imageRightView.setVisibility(View.VISIBLE);
                         RunAnimation(imageRightView);
                         wordsRightView.setVisibility(View.VISIBLE);
@@ -418,6 +454,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),countLine);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE),countDialogLine);
+        Log.d("prefs","count dialog save " + countDialogLine);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), picId);
         editor.apply();
         StoryFirstActivity.this.setResult(RESULT_CANCELED);
