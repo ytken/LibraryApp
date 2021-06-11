@@ -90,7 +90,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
         countDialogLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE), 0);
         backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
-
+        Log.d("linescount", "line count " + countLine + " line dialog count " + countDialogLine);
         if (countLine > 1){
             for (int i = 0; i < countLine; i++) {
                 try {
@@ -102,25 +102,23 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     e.printStackTrace();
                 }
             }
-            wordsView.setText(line);
+            if (line.contains("Dialog")) {
+                backgr.callOnClick();
+            }
+            else wordsView.setText(line);
             DialogFragment dialog = new DialogContinueGame(sPref, reader);
             dialog.show(getSupportFragmentManager(), "Dialog Continue Game");
         }
         else {
-            countLine = 1;
-            try {
-                line = reader.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (!line.isEmpty())
-                wordsView.setText(line);
+            countLine = 0;
+
+            //if (!line.isEmpty()) backgr.callOnClick();
         }
 
         if (countDialogLine > 1){
             for (int i = 0; i < countDialogLine; i++) {
                 try { lineDialog = readerDialog.readLine();
-                    countLine+=1;}
+                    }
                 catch (IOException e) { e.printStackTrace(); }
             }
         }
@@ -153,8 +151,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             case R.id.imageWords:
                 try {
                     line = reader.readLine();
-                    Log.d("dialogWords",line);
                     countLine++;
+                    Log.d("dialogWords",line);
                     if (line.contains("Image")) {
                         setBackgrIm(line);
                         if (imageView.getVisibility()==View.VISIBLE) {
@@ -305,6 +303,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             RunAnimation(imageRightView);
             wordsRightView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
+            countDialogLine++;
             Log.d("readDialog","2");
             Log.d("dialogWords", "In case some perso " + lineDialog);
             wordsRightView.setText(lineDialog);
@@ -316,6 +315,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     void handleChoice() throws IOException {
         lineDialog = readerDialog.readLine();
+        countDialogLine++;
         Log.d("readDialog","4 " + lineDialog);
         if (lineDialog.contains("1)")) {
             textLeftChoice.setText(lineDialog);
@@ -323,6 +323,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             while (!lineDialog.isEmpty()) {
                 lineChoice1 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
+                countDialogLine++;
                 Log.d("readDialog","5");
             }
             lineChoice1 += "\n";
@@ -336,6 +337,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             while (!lineDialog.isEmpty()) {
                 lineChoice2 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
+                countDialogLine++;
                 Log.d("readDialog","7");
             }
             lineChoice2 += "\n";

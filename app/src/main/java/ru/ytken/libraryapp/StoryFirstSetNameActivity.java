@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class StoryFirstSetNameActivity extends AppCompatActivity implements AskNameDialog.OnFinalListener {
-    ImageView imageBackground;
     ImageButton backButton, buttonWoman, buttonMan;
     Resources res;
 
