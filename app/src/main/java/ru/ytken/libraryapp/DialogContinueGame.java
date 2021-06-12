@@ -20,15 +20,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class DialogContinueGame extends DialogFragment {
-    int countLine, picId;
-    String line, pic;
-    BufferedReader reader;
     SharedPreferences sPref; SharedPreferences.Editor editor;
     private Removable removable;
 
-    public DialogContinueGame(SharedPreferences sPref, BufferedReader reader) {
+    public DialogContinueGame(SharedPreferences sPref) {
         this.sPref = sPref;
-        this.reader = reader;
         editor = sPref.edit();
     }
 

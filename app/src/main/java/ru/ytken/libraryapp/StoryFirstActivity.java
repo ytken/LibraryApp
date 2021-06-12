@@ -32,10 +32,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     ImageButton buttonLeftChoice, buttonRightChoice;
     ImageView imageView, imageLeftView, imageRightView, backgr, imageGG, imageChar;
     TextView wordsView, wordsLeftView, wordsRightView, nameSpeakerView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
-    BufferedReader reader, readerDialog;
+    BufferedReader reader, readerDialog, readerContinueDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
-    int countLine = 0, countDialogLine = 0;
-    boolean talking = false;
+    int countLine = 0, countDialogLine = 0, countContinue = 0;
+    boolean talking = false, continueDialog = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,6 +86,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
         readerDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
+        readerContinueDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
 
         countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
         countDialogLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE), 0);
@@ -102,27 +103,48 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     e.printStackTrace();
                 }
             }
-            if (line.contains("Dialog")) {
-                backgr.callOnClick();
-            }
-            else wordsView.setText(line);
-            DialogFragment dialog = new DialogContinueGame(sPref, reader);
+            if (!line.contains("Dialog"))
+                wordsView.setText(line);
+            DialogFragment dialog = new DialogContinueGame(sPref);
             dialog.show(getSupportFragmentManager(), "Dialog Continue Game");
         }
         else {
             countLine = 0;
-
+            
             //if (!line.isEmpty()) backgr.callOnClick();
         }
 
         if (countDialogLine > 1){
-            for (int i = 0; i < countDialogLine; i++) {
-                try { lineDialog = readerDialog.readLine();
+            continueDialog = true;
+            if (line.contains("Dialog")) {
+                for (int i = 0; i < countDialogLine; i++) {
+                    try { lineDialog = readerContinueDialog.readLine();
+                        if (lineDialog.contains("---------")) countContinue=i;
                     }
-                catch (IOException e) { e.printStackTrace(); }
+                    catch (IOException e) { e.printStackTrace(); }
+                }
+                for (int i = 0; i < countContinue + 1; i++)
+                    try {
+                        lineDialog = readerDialog.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                int helperCount = countDialogLine; countDialogLine = countContinue;
+                backgr.callOnClick();
+                for (int i = countContinue; i < helperCount-1; i++) {
+                    clicker.callOnClick();
+                }
+                Log.d("continuing", "helper " + helperCount + " line " + lineDialog);
             }
-        }
+            else {
+                for (int i = 0; i < countDialogLine; i++) {
+                    try { lineDialog = readerDialog.readLine();
+                    }
+                    catch (IOException e) { e.printStackTrace(); }
+                }
+            }
 
+        }
         Log.d("prefs","count dialog get " + countDialogLine + " with " + lineDialog);
     }
 
@@ -150,8 +172,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             case R.id.imageBackgr:
             case R.id.imageWords:
                 try {
-                    line = reader.readLine();
-                    countLine++;
+                    if (continueDialog)
+                        continueDialog = false;
+                    else {
+                        line = reader.readLine();
+                        countLine++;
+                    }
                     Log.d("dialogWords",line);
                     if (line.contains("Image")) {
                         setBackgrIm(line);
@@ -187,13 +213,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                                         OffAnimation(wordsRightView);
                                     }
                                     nameSpeakerView.setVisibility(View.INVISIBLE);
-                                    Log.d("dialogChoice", "finish dialog");
                                     try {
                                         lineDialog = readerDialog.readLine();
+                                        countDialogLine++;
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    Log.d("dialogChoice", lineDialog);
                                 }
                             });
 
@@ -243,6 +268,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             } else if (lineDialog.contains("***")) {
                 talking = false;
                 lineDialog = readerDialog.readLine();
+                countDialogLine++;
                 setTalkingPerso(lineDialog);
             } else if (lineDialog.isEmpty()) {
                 talking = false;
@@ -258,11 +284,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             if (!(modeGame.contains("Choice")))
                 try {
                     lineDialog = readerDialog.readLine();
+                    countDialogLine++;
                     Log.d("readDialog", "3 " + lineDialog);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            countDialogLine++;
         }
     }
 
@@ -276,6 +302,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             RunAnimation(imageLeftView);
             wordsLeftView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
+            countDialogLine++;
             Log.d("readDialog","1");
             wordsLeftView.setText(lineDialog);
             RunAnimation(wordsLeftView);
@@ -318,7 +345,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         countDialogLine++;
         Log.d("readDialog","4 " + lineDialog);
         if (lineDialog.contains("1)")) {
-            textLeftChoice.setText(lineDialog);
+            textLeftChoice.setText(lineDialog.substring(2));
             Log.d("dialogChoice", "set left choice " + lineDialog);
             while (!lineDialog.isEmpty()) {
                 lineChoice1 += "\n" + lineDialog;
@@ -328,11 +355,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             }
             lineChoice1 += "\n";
             lineDialog = readerDialog.readLine();
+            countDialogLine++;
             Log.d("readDialog","6");
             Log.d("dialogChoice", lineChoice1);
         }
         if (lineDialog.contains("2)")) {
-            textRightChoice.setText(lineDialog);
+            textRightChoice.setText(lineDialog.substring(2));
             Log.d("dialogChoice", "set right choice " + lineDialog);
             while (!lineDialog.isEmpty()) {
                 lineChoice2 += "\n" + lineDialog;
@@ -467,7 +495,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     protected void onDestroy() {
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),countLine);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE),countDialogLine);
-        Log.d("prefs","count dialog save " + countDialogLine);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), picId);
         editor.apply();
         StoryFirstActivity.this.setResult(RESULT_CANCELED);
