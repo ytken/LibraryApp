@@ -50,7 +50,6 @@ public class AskNameDialog extends DialogFragment {
                     onFinalListener.sendSignal();
                 })
                 .setNegativeButton(R.string.cancel, (dialog, id) -> {
-
                 });
         editName = view.findViewById(R.id.char_name);
         editName.setText(getArguments().getString("name"));

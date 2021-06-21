@@ -12,7 +12,7 @@
     <dimen name="name_first_story">30</dimen>
     <dimen name="words_text_size">30sp</dimen>
     <dimen name="names_text_size">20sp</dimen>
-    <dimen name="choice_text_size">15sp</dimen>
+    <dimen name="choice_text_size">14sp</dimen>
 
     <string name="TAG_DIALOG" translatable="false">DIALOG_SET_NAME</string>
     <string name="LOG_TAG" translatable="false">myLog</string>

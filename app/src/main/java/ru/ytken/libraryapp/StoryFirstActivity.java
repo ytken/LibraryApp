@@ -27,15 +27,15 @@ import java.io.InputStreamReader;
 
 public class StoryFirstActivity extends AppCompatActivity implements View.OnClickListener, DialogContinueGame.Removable {
 
-    String line = "", lineDialog = "", lineChoice1 = "", lineChoice2 = "", nickname = "", wordsPers = "***", namePersoTalk = "", textChoice = "", modeGame="";
+    String line = "", lineDialog = "s", lineChoice1 = "", lineChoice2 = "", nickname = "", wordsPers = "***", namePersoTalk = "", textChoice = "", modeGame="";
     int picId, textId, textDialogId;
-    ImageButton buttonLeftChoice, buttonRightChoice;
+    ImageButton buttonLeftChoice, buttonRightChoice, backButton;
     ImageView imageView, imageLeftView, imageRightView, backgr, imageGG, imageChar;
     TextView wordsView, wordsLeftView, wordsRightView, nameSpeakerView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
     BufferedReader reader, readerDialog, readerContinueDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
     int countLine = 0, countDialogLine = 0, countContinue = 0;
-    boolean talking = false, continueDialog = false;
+    boolean talking = false, continueDialog = false, readMore = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +46,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         backgr = findViewById(R.id.imageBackgr);
         backgr.setOnClickListener(this);
+
+        backButton = findViewById(R.id.story_button_back_story);
+        backButton.setOnClickListener(v -> finish());
 
         imageView = findViewById(R.id.imageWords);
         imageView.setOnClickListener(this);
@@ -91,7 +94,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
         countDialogLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE), 0);
         backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
-        Log.d("linescount", "line count " + countLine + " line dialog count " + countDialogLine);
+        Log.d("linescountyeahh", "line count " + countLine + " line dialog count " + countDialogLine);
         if (countLine > 1){
             for (int i = 0; i < countLine; i++) {
                 try {
@@ -105,17 +108,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             }
             if (!line.contains("Dialog"))
                 wordsView.setText(line);
+            else
+                continueDialog = true;
             DialogFragment dialog = new DialogContinueGame(sPref);
             dialog.show(getSupportFragmentManager(), "Dialog Continue Game");
         }
-        else {
+        else
             countLine = 0;
-            
-            //if (!line.isEmpty()) backgr.callOnClick();
-        }
 
         if (countDialogLine > 1){
-            continueDialog = true;
             if (line.contains("Dialog")) {
                 for (int i = 0; i < countDialogLine; i++) {
                     try { lineDialog = readerContinueDialog.readLine();
@@ -123,16 +124,20 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     }
                     catch (IOException e) { e.printStackTrace(); }
                 }
-                for (int i = 0; i < countContinue + 1; i++)
+                lineDialog = "";
+                for (int i = 0; i < countContinue; i++)
                     try {
                         lineDialog = readerDialog.readLine();
+                        Log.d("linescountyeahh", "read");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 int helperCount = countDialogLine; countDialogLine = countContinue;
                 backgr.callOnClick();
+                clicker.setVisibility(View.VISIBLE);
                 for (int i = countContinue; i < helperCount-1; i++) {
                     clicker.callOnClick();
+                    Log.d("linescountyeahh", "click");
                 }
                 Log.d("continuing", "helper " + helperCount + " line " + lineDialog);
             }
@@ -145,6 +150,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             }
 
         }
+        else
+            try {
+                lineDialog = readerDialog.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         Log.d("prefs","count dialog get " + countDialogLine + " with " + lineDialog);
     }
 
@@ -178,6 +189,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                         line = reader.readLine();
                         countLine++;
                     }
+                    if (line==null) finish();
                     Log.d("dialogWords",line);
                     if (line.contains("Image")) {
                         setBackgrIm(line);
@@ -253,6 +265,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             else if (lineDialog.contains("Choice")) {
                 try {
                     modeGame = "Choice";
+                    //readMore = false;
                     imageLeftView.setVisibility(View.INVISIBLE);
                     wordsLeftView.setVisibility(View.INVISIBLE);
                     imageRightView.setVisibility(View.INVISIBLE);
@@ -270,18 +283,23 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 lineDialog = readerDialog.readLine();
                 countDialogLine++;
                 setTalkingPerso(lineDialog);
+                //readMore = true;
             } else if (lineDialog.isEmpty()) {
                 talking = false;
                 imageGG.setVisibility(View.INVISIBLE);
                 imageChar.setVisibility(View.INVISIBLE);
+                //readMore = true;
             } else if (talking) {
                 Log.d("dialogWords", "In case talking " + lineDialog);
                 talkingText.setText(lineDialog);
                 RunAnimation(talkingText);
-            } else if (lineDialog.contains("------")) {
-            } else
+                //readMore = true;
+            } else if (lineDialog.contains("------")) { //readMore = true;
+            } else {
                 setTalkingPerso(lineDialog);
-            if (!(modeGame.contains("Choice")))
+                //readMore = true;
+            }
+            if (readMore)
                 try {
                     lineDialog = readerDialog.readLine();
                     countDialogLine++;
@@ -406,7 +424,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 case "решительность":
                 case "внимательность":
                 case "стойкость":
-                    Toast.makeText(this,namePersoTalk, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,namePersoTalk, Toast.LENGTH_SHORT).show();
                     textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
                     Log.d("lineChoice", "namePersoTalk: " + namePersoTalk + "textChoice: " + textChoice);
                     break;

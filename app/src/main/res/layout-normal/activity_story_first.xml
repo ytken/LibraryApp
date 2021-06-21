@@ -158,8 +158,8 @@
 
     <TextView
         android:id="@+id/textViewLeftChoice"
-        android:layout_width="136dp"
-        android:layout_height="63dp"
+        android:layout_width="128dp"
+        android:layout_height="58dp"
         android:elevation="9dp"
         android:fontFamily="@font/marta"
         android:gravity="center"
@@ -168,15 +168,15 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/imageButtonLeftChoice"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonLeftChoice"
-        app:layout_constraintHorizontal_bias="0.406"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="@+id/imageButtonLeftChoice"
         app:layout_constraintTop_toTopOf="@+id/imageButtonLeftChoice"
-        app:layout_constraintVertical_bias="0.589" />
+        app:layout_constraintVertical_bias="0.592" />
 
     <TextView
         android:id="@+id/textViewRightChoice"
-        android:layout_width="136dp"
-        android:layout_height="63dp"
+        android:layout_width="126dp"
+        android:layout_height="57dp"
         android:elevation="9dp"
         android:fontFamily="@font/marta"
         android:gravity="center"
@@ -185,10 +185,10 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/imageButtonRightChoice"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonRightChoice"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="@+id/imageButtonRightChoice"
         app:layout_constraintTop_toTopOf="@+id/imageButtonRightChoice"
-        app:layout_constraintVertical_bias="0.595" />
+        app:layout_constraintVertical_bias="0.593" />
 
     <TextView
         android:id="@+id/clickerInner"
@@ -200,33 +200,49 @@
     <ImageView
         android:id="@+id/imageViewMan"
         android:layout_width="match_parent"
-        android:layout_height="689dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/charlie_cut" />
 
     <ImageView
         android:id="@+id/imageViewWoman"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/lia_cut" />
 
     <ImageView
         android:id="@+id/imageViewChar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/stiven_cut"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
         android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/story_button_back_story"
+        android:layout_width="120dp"
+        android:layout_height="130dp"
+        android:background="@android:color/transparent"
+        android:elevation="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/button_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             String sex = sPref.getString(getResources().getString(R.string.TAG_CHAR_SEX),"");
             myIntent.putExtra("name", name);
             myIntent.putExtra("sex", sex);
-            MainActivity.this.startActivity(myIntent);
+            MainActivity.this.startActivityForResult(myIntent, 2);
         }
         if(requestCode == 2) {
             if (resultCode == RESULT_CANCELED) {
