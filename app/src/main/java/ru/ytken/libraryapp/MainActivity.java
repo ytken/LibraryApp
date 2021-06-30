@@ -6,12 +6,19 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.ytken.libraryapp.recycler.RecAdapter;
@@ -21,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recycler;
     ImageButton buttonBack;
-    SharedPreferences sPref;
+    TextView textCoins;
+    SharedPreferences sPref; SharedPreferences.Editor editor;
     RecAdapter adapter;
+    Integer coins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         sPref = getSharedPreferences(getResources().getString(R.string.prefs_first_story_name),MODE_PRIVATE);
+        editor = sPref.edit();
 
         recycler = findViewById(R.id.recycler_main);
         LinearLayoutManager layoutManager
@@ -40,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
 
         buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(v -> finish());
+
+        textCoins = findViewById(R.id.textViewCoins);
+        coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), -1);
+        if (coins == -1) {
+            DialogFragment newFragment = MyDialogFragment.newInstance();
+            newFragment.show(getSupportFragmentManager(), "dialog");
+            coins = 15;
+            editor.putInt(getResources().getString(R.string.COIN_NUMBER), coins);
+            editor.apply();
+        }
+        textCoins.setText(coins.toString());
     }
 
     public class MyListener implements RecAdapter.StoryClickedListener {
@@ -90,4 +111,25 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public static class MyDialogFragment extends DialogFragment {
+
+        static MyDialogFragment newInstance() {
+            MyDialogFragment f = new MyDialogFragment();
+            return f;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.coin_fragment_dialog, container, false);
+            Button buttonGet15 = v.findViewById(R.id.buttonGet15);
+            buttonGet15.setOnClickListener(v1 -> {
+                this.dismiss();
+            });
+            return v;
+        }
+
+    }
+
 }

@@ -3,10 +3,11 @@ package ru.ytken.libraryapp;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import ru.ytken.libraryapp.dialogs.AskNameDialog;
 
 public class StoryFirstSetNameActivity extends AppCompatActivity implements AskNameDialog.OnFinalListener {
     ImageButton backButton, buttonWoman, buttonMan;

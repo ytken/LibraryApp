@@ -13,6 +13,7 @@
     <dimen name="words_text_size">30sp</dimen>
     <dimen name="names_text_size">20sp</dimen>
     <dimen name="choice_text_size">14sp</dimen>
+    <dimen name="big_text_size">40dp</dimen>
 
     <string name="TAG_DIALOG" translatable="false">DIALOG_SET_NAME</string>
     <string name="LOG_TAG" translatable="false">myLog</string>
@@ -24,5 +25,10 @@
     <string name="TAG_BACKGROUND" translatable="false">ID_BACKGROUNG</string>
     <string name="prefs_first_story_name" translatable="false">first_story</string>
     <string name="hint_click_first_story">Кликни по свитку для начала истории</string>
+    <string name="STATE_COURAGE">ST_COURAGE</string>
+    <string name="STATE_ATTENTION">ST_ATTENTION</string>
+    <string name="STATE_DETERMINATION">ST_DETERMINATION</string>
+    <string name="STATE_RESISTANCE">ST_RESISTANCE</string>
+    <string name="COIN_NUMBER">COIN_NUMBER</string>
 
 </resources>

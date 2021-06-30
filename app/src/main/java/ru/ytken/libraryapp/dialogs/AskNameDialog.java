@@ -1,4 +1,4 @@
-package ru.ytken.libraryapp;
+package ru.ytken.libraryapp.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,6 +15,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import java.lang.ref.WeakReference;
+
+import ru.ytken.libraryapp.R;
 
 public class AskNameDialog extends DialogFragment {
     private EditText editName;

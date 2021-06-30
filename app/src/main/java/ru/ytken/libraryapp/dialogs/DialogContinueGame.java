@@ -1,4 +1,4 @@
-package ru.ytken.libraryapp;
+package ru.ytken.libraryapp.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,6 +18,8 @@ import androidx.fragment.app.DialogFragment;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import ru.ytken.libraryapp.R;
 
 public class DialogContinueGame extends DialogFragment {
     SharedPreferences sPref; SharedPreferences.Editor editor;
@@ -57,15 +59,3 @@ public class DialogContinueGame extends DialogFragment {
                 .create();
     }
 }
-
-/*negative
-countLine = 1;
-                    backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
-                    try {
-                        line = reader.readLine();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (!line.isEmpty())
-                        wordsView.setText(line);
-                    activity.setCountLine(countLine);*/

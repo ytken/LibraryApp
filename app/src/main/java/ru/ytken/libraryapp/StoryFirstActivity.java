@@ -1,8 +1,6 @@
 package ru.ytken.libraryapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,19 +9,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import ru.ytken.libraryapp.dialogs.DialogContinueGame;
 
 public class StoryFirstActivity extends AppCompatActivity implements View.OnClickListener, DialogContinueGame.Removable {
 
@@ -35,7 +31,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     BufferedReader reader, readerDialog, readerContinueDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
     int countLine = 0, countDialogLine = 0, countContinue = 0;
+    int st_courage = 0, st_determ = 0, st_atten = 0, st_resist = 0;
     boolean talking = false, continueDialog = false, readMore = true;
+    int coins;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +88,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
         readerDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
         readerContinueDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
+
+        st_courage = sPref.getInt(getResources().getString(R.string.STATE_COURAGE), 0);
+        st_atten = sPref.getInt(getResources().getString(R.string.STATE_ATTENTION), 0);
+        st_determ = sPref.getInt(getResources().getString(R.string.STATE_DETERMINATION), 0);
+        st_resist = sPref.getInt(getResources().getString(R.string.STATE_RESISTANCE), 0);
+
+        coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), 0);
 
         countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
         countDialogLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE), 0);
@@ -407,6 +412,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    void switchStateAction() {
+        //Toast.makeText(this,namePersoTalk, Toast.LENGTH_SHORT).show();
+        textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
+        Log.d("lineChoice", "namePersoTalk: " + namePersoTalk + "textChoice: " + textChoice);
+    }
+
     void parseChoiceAction(String textAction) {
         lineChoice1=""; lineChoice2="";
         wordsPers = "***";
@@ -420,14 +431,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         namePersoTalk = textChoice.substring(0,textChoice.indexOf("\n"));
         if(namePersoTalk.contains(" ")){
             switch (namePersoTalk.substring(0,namePersoTalk.indexOf(" "))) {
-                case "отвага":
-                case "решительность":
-                case "внимательность":
-                case "стойкость":
-                    //Toast.makeText(this,namePersoTalk, Toast.LENGTH_SHORT).show();
-                    textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
-                    Log.d("lineChoice", "namePersoTalk: " + namePersoTalk + "textChoice: " + textChoice);
-                    break;
+                case "отвага": st_courage += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
+                case "решительность": st_determ += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
+                case "внимательность": st_atten += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
+                case "стойкость": st_resist += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
                 default: break;
             }
         }
@@ -514,6 +521,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),countLine);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE),countDialogLine);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), picId);
+        editor.putInt(getString(R.string.STATE_COURAGE), st_courage);
+        editor.putInt(getString(R.string.STATE_ATTENTION), st_atten);
+        editor.putInt(getString(R.string.STATE_DETERMINATION), st_determ);
+        editor.putInt(getString(R.string.STATE_RESISTANCE), st_resist);
+        editor.putInt(getString(R.string.COIN_NUMBER), coins);
         editor.apply();
         StoryFirstActivity.this.setResult(RESULT_CANCELED);
         super.onDestroy();
