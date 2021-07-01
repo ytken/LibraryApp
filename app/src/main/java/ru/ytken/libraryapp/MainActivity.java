@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sPref; SharedPreferences.Editor editor;
     RecAdapter adapter;
     Integer coins;
+    public boolean FLAG_DIALOG = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         textCoins = findViewById(R.id.textViewCoins);
         coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), -1);
+        Log.d("gettingCoins", coins.toString());
         if (coins == -1) {
             DialogFragment newFragment = MyDialogFragment.newInstance();
             newFragment.show(getSupportFragmentManager(), "dialog");
@@ -103,13 +105,24 @@ public class MainActivity extends AppCompatActivity {
         }
         if(requestCode == 2) {
             if (resultCode == RESULT_CANCELED) {
-                DialogFragment dialog = new DialogSaving(StoryFirstActivity.editor);
-                dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                if (FLAG_DIALOG) {
+                    DialogFragment dialog = new DialogSaving(StoryFirstActivity.editor);
+                    dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                }
             }
             if (resultCode == RESULT_OK) {
-                adapter.onStoryClicked(0);
+                coins += 10;
+                textCoins.setText(coins.toString());
+                //adapter.onStoryClicked(0);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        editor.putInt(getResources().getString(R.string.COIN_NUMBER), coins);
+        editor.apply();
+        super.onDestroy();
     }
 
     public static class MyDialogFragment extends DialogFragment {

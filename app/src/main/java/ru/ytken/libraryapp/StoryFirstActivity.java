@@ -1,16 +1,25 @@
 package ru.ytken.libraryapp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
@@ -34,6 +43,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     int st_courage = 0, st_determ = 0, st_atten = 0, st_resist = 0;
     boolean talking = false, continueDialog = false, readMore = true;
     int coins;
+    int linearWidth = 0, linearHeight = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,14 +73,14 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         buttonRightChoice = findViewById(R.id.imageButtonRightChoice);
         textRightChoice = findViewById(R.id.textViewRightChoice);
 
-        /*
+
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE),0);
-        editor.apply();*/
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
+        editor.apply();
 
         String sex = getIntent().getStringExtra("sex");
         switch (sex) {
-            case "M": textId = R.raw.test_author; textDialogId = R.raw.test_man; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
+            case "M": textId = R.raw.man_author_1; textDialogId = R.raw.man_man_1; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
             case "W": textId = R.raw.woman_author_1; textDialogId = R.raw.woman_man_1; nickname = "Woman"; imageGG = findViewById(R.id.imageViewWoman); break;
             default: break;
         }
@@ -197,7 +207,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                         line = reader.readLine();
                         countLine++;
                     }
-                    if (line==null) finish();
+                    if (line==null) showClosingScreen();
                     else {
                     Log.d("dialogWords",line);
                     if (line.contains("Image")) {
@@ -310,7 +320,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     e.printStackTrace();
                 }
         }
-        else finish();
+        else showClosingScreen();
     }
 
     void setTalkingPerso(String name) throws IOException {
@@ -509,7 +519,81 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         clickerInner.callOnClick();
     }
 
+    private void showClosingScreen() {
+        LayoutInflater li = LayoutInflater.from(StoryFirstActivity.this);
+        LinearLayout linear = (LinearLayout)li.inflate(R.layout.linear, null);
+        linearWidth = linear.getWidth(); linearHeight = linear.getHeight();
+        float values[] = {st_courage, st_atten, st_resist, st_determ};
 
+        values=calculateData(values);
+        linear.addView(new MyGraphview(this,values));
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(StoryFirstActivity.this);
+        alert.setView(linear);
+        alert.setPositiveButton("ОК", (dialog, which) -> {
+            StoryFirstActivity.this.remove();
+        }).show();
+    }
+
+    private float[] calculateData(float[] data) {
+        float total=0;
+        for(int i=0;i<data.length;i++) {
+            total+=data[i];
+        }
+        for(int i=0;i<data.length;i++) {
+            data[i]=360*(data[i]/total);
+        }
+        return data;
+    }
+
+    public class MyGraphview extends View
+    {
+        private Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);
+        private float[] value_degree;
+        private int[] COLORS={Color.BLUE,Color.GREEN,Color.GRAY,Color.CYAN,Color.RED};
+        RectF rectf = new RectF(10,10,1000,1000);
+
+        public MyGraphview(Context context, float[] values) {
+            super(context);
+            value_degree=new float[values.length];
+            for(int i=0;i<values.length;i++) {
+                value_degree[i]=values[i];
+            }
+            //rectf.top = 10; rectf.left = 10; rectf.bottom = linearWidth - 10; rectf.right = linearWidth - 10;
+        }
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            int temp = 0;
+
+            for (int i = 0; i < value_degree.length; i++) {//values2.length; i++) {
+                if (i == 0) {
+                    paint.setColor(COLORS[i]);
+                    canvas.drawArc(rectf, 0, value_degree[i], true, paint);
+                }
+                else {
+                    temp += (int) value_degree[i - 1];
+                    paint.setColor(COLORS[i]);
+                    canvas.drawArc(rectf, temp, value_degree[i], true, paint);
+                }
+                if (value_degree[i] > 0) {
+                    canvas.drawRect(10,1010+i*220, 210, 1210+i*220, paint);
+                    String text = "";
+                    switch (i) {
+                        case 0: text = "Отвага"; break;
+                        case 1: text = "Внимательность"; break;
+                        case 2: text = "Стойкость"; break;
+                        case 3: text = "Решительность"; break;
+                    }
+                    paint.setColor(getResources().getColor(R.color.primaryBlack, null));
+                    paint.setTextSize(getResources().getDimension(R.dimen.names_text_size));
+                    canvas.drawText(text, 250, 1110+i*220,paint);
+                }
+
+            }
+
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -549,4 +633,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         setResult(RESULT_OK);
         this.finish();
     }
+
+    public interface shouldSave {
+        void setFlag(boolean flag);
+    }
+
 }

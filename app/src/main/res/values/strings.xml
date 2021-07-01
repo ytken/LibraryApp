@@ -14,6 +14,7 @@
     <dimen name="names_text_size">20sp</dimen>
     <dimen name="choice_text_size">14sp</dimen>
     <dimen name="big_text_size">40dp</dimen>
+    <dimen name="biggy_big_text_size">70dp</dimen>
 
     <string name="TAG_DIALOG" translatable="false">DIALOG_SET_NAME</string>
     <string name="LOG_TAG" translatable="false">myLog</string>
