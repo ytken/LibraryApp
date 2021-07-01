@@ -41,6 +41,7 @@ public class AskNameDialog extends DialogFragment {
         editor.putString(getResources().getString(R.string.TAG_CHAR_SEX), getArguments().getString("sex"));
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
         createProjectAlert.setView(view)
                 .setPositiveButton(R.string.setname, (dialog, id) -> {

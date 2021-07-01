@@ -28,9 +28,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     ImageButton buttonLeftChoice, buttonRightChoice, backButton;
     ImageView imageView, imageLeftView, imageRightView, backgr, imageGG, imageChar;
     TextView wordsView, wordsLeftView, wordsRightView, nameSpeakerView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
-    BufferedReader reader, readerDialog, readerContinueDialog;
+    BufferedReader reader, readerDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
-    int countLine = 0, countDialogClick = 0, countContinue = 0;
+    int countLine = 0, countDialogClick = 0, countDialogNum = 0;
     int st_courage = 0, st_determ = 0, st_atten = 0, st_resist = 0;
     boolean talking = false, continueDialog = false, readMore = true;
     int coins;
@@ -92,7 +92,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
         readerDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
-        readerContinueDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
 
         st_courage = sPref.getInt(getResources().getString(R.string.STATE_COURAGE), 0);
         st_atten = sPref.getInt(getResources().getString(R.string.STATE_ATTENTION), 0);
@@ -103,8 +102,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
         countDialogClick = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK), 0);
+        countDialogNum = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
+
         backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
-        Log.d("linescountyeahh", "line count " + countLine + " click dialog count " + countDialogClick);
+        Log.d("linescountyeahh", "line count " + countLine + " click dialog count " + countDialogClick + " num dialog count " + countDialogNum);
         if (countLine > 1){
             for (int i = 0; i < countLine; i++) {
                 try {
@@ -126,43 +127,35 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         else
             countLine = 0;
 
-        if (countDialogClick > 0){
-            if (line.contains("Dialog")) {
-                for (int i = 0; i < countDialogClick; i++) {
-                    try { lineDialog = readerContinueDialog.readLine();
-                        if (lineDialog.contains("---------")) countContinue=i;
-                    }
-                    catch (IOException e) { e.printStackTrace(); }
+        if ((countDialogClick > 0) || (countDialogNum > 0)){
+            Log.d("linescountyeahh", "in if and line = " + line);
+            int p = 0;
+            while (p < countDialogNum) {
+                try { lineDialog = readerDialog.readLine();
+                    Log.d("linescountyeahh", lineDialog);
                 }
+                catch (IOException e) { e.printStackTrace(); }
+                if (lineDialog.contains("---------")) p++;
+            }
+            try { lineDialog = readerDialog.readLine();
+                Log.d("linescountyeahh", "dop = " + lineDialog);
+            }
+            catch (IOException e) { e.printStackTrace(); }
+            if (countDialogClick > 0) {
                 lineDialog = "";
-                for (int i = 0; i < countContinue; i++)
-                    try {
-                        lineDialog = readerDialog.readLine();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                int helperCount = countDialogClick; countDialogClick = countContinue;
                 backgr.callOnClick();
                 clicker.setVisibility(View.VISIBLE);
-                try {
+                /*try {
                     parseDialog();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-                for (int i = countContinue; i < helperCount; i++) {
+                }*/
+                int helperClick = countDialogClick; countDialogClick = 0;
+                for (int i = 0; i < helperClick; i++) {
                     clicker.callOnClick();
                     Log.d("linescountyeahh", "click");
                 }
-                Log.d("linescountyeahh", "helper " + helperCount + " line " + lineDialog + " countContinue " + countContinue);
             }
-            else {
-                for (int i = 0; i < countDialogClick; i++) {
-                    try { lineDialog = readerDialog.readLine();
-                    }
-                    catch (IOException e) { e.printStackTrace(); }
-                }
-            }
-
         }
         else
             try {
@@ -293,6 +286,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 RunAnimation(talkingText);
                 //readMore = true;
             } else if (lineDialog.contains("------")) {
+                countDialogNum ++;
+                countDialogClick = 0;
                 clicker.setVisibility(View.GONE);
                 if (imageLeftView.getVisibility()==View.VISIBLE) {
                     OffAnimation(imageLeftView);
@@ -520,6 +515,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     protected void onDestroy() {
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),countLine);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),countDialogClick);
+        editor.putInt(getString(R.string.TAG_COUNT_DIALOG_NUM), countDialogNum);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), picId);
         editor.putInt(getString(R.string.STATE_COURAGE), st_courage);
         editor.putInt(getString(R.string.STATE_ATTENTION), st_atten);

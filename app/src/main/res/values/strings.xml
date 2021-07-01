@@ -31,5 +31,6 @@
     <string name="STATE_RESISTANCE">ST_RESISTANCE</string>
     <string name="COIN_NUMBER">COIN_NUMBER</string>
     <string name="CLICK_DIALOG_COUNT">CLICK_DIALOG_COUNT</string>
+    <string name="TAG_COUNT_DIALOG_NUM">COUNT_DIALOG_NUM</string>
 
 </resources>
