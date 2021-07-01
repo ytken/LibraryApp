@@ -1,7 +1,6 @@
 package ru.ytken.libraryapp;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -27,7 +26,7 @@ public class DialogSaving extends DialogFragment {
                 })
                 .setNegativeButton("Нет", (dialog, which) -> {
                     editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),1);
-                    editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE), 0);
+                    editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK), 0);
                     editor.putInt(getResources().getString(R.string.TAG_BACKGROUND),0);
                     editor.apply();
                 })

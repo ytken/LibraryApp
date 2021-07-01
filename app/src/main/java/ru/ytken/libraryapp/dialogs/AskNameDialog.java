@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -13,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-
-import java.lang.ref.WeakReference;
 
 import ru.ytken.libraryapp.R;
 
@@ -43,7 +40,7 @@ public class AskNameDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.setname_dialog_fragment, null);
         editor.putString(getResources().getString(R.string.TAG_CHAR_SEX), getArguments().getString("sex"));
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE),0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
         createProjectAlert.setView(view)
                 .setPositiveButton(R.string.setname, (dialog, id) -> {

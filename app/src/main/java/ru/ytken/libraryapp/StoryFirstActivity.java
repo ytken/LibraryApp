@@ -30,7 +30,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     TextView wordsView, wordsLeftView, wordsRightView, nameSpeakerView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
     BufferedReader reader, readerDialog, readerContinueDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
-    int countLine = 0, countDialogLine = 0, countContinue = 0;
+    int countLine = 0, countDialogClick = 0, countContinue = 0;
     int st_courage = 0, st_determ = 0, st_atten = 0, st_resist = 0;
     boolean talking = false, continueDialog = false, readMore = true;
     int coins;
@@ -102,9 +102,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), 0);
 
         countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
-        countDialogLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE), 0);
+        countDialogClick = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK), 0);
         backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
-        Log.d("linescountyeahh", "line count " + countLine + " line dialog count " + countDialogLine);
+        Log.d("linescountyeahh", "line count " + countLine + " click dialog count " + countDialogClick);
         if (countLine > 1){
             for (int i = 0; i < countLine; i++) {
                 try {
@@ -126,9 +126,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         else
             countLine = 0;
 
-        if (countDialogLine > 0){
+        if (countDialogClick > 0){
             if (line.contains("Dialog")) {
-                for (int i = 0; i < countDialogLine; i++) {
+                for (int i = 0; i < countDialogClick; i++) {
                     try { lineDialog = readerContinueDialog.readLine();
                         if (lineDialog.contains("---------")) countContinue=i;
                     }
@@ -141,7 +141,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                int helperCount = countDialogLine; countDialogLine = countContinue;
+                int helperCount = countDialogClick; countDialogClick = countContinue;
                 backgr.callOnClick();
                 clicker.setVisibility(View.VISIBLE);
                 try {
@@ -156,7 +156,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 Log.d("linescountyeahh", "helper " + helperCount + " line " + lineDialog + " countContinue " + countContinue);
             }
             else {
-                for (int i = 0; i < countDialogLine; i++) {
+                for (int i = 0; i < countDialogClick; i++) {
                     try { lineDialog = readerDialog.readLine();
                     }
                     catch (IOException e) { e.printStackTrace(); }
@@ -171,7 +171,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 e.printStackTrace();
 
             }
-        Log.d("prefs","count dialog get " + countDialogLine + " with " + lineDialog);
+        Log.d("prefs","count dialog get " + countDialogClick + " with " + lineDialog);
     }
 
     void setBackgrIm(String name) {
@@ -225,7 +225,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             clicker.setVisibility(View.VISIBLE);
                             parseDialog();
                             clicker.setOnClickListener(v1 -> {
-                                countDialogLine++;
+                                countDialogClick++;
                                 try {
                                     parseDialog();
                                 } catch (IOException e) {
@@ -439,7 +439,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         clickerInner.setVisibility(View.VISIBLE);
         Log.d("dialogChoice", "opening clickerInner");
         clickerInner.setOnClickListener(v -> {
-            countDialogLine++;
+            countDialogClick++;
             if (textChoice.isEmpty()) {
                 Log.d("dialogChoice", "closing clickerInner");
                 clickerInner.setVisibility(View.GONE);
@@ -519,7 +519,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),countLine);
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE),countDialogLine);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),countDialogClick);
         editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), picId);
         editor.putInt(getString(R.string.STATE_COURAGE), st_courage);
         editor.putInt(getString(R.string.STATE_ATTENTION), st_atten);

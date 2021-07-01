@@ -21,7 +21,7 @@
     <string name="TAG_CHAR_SEX" translatable="false">CHARACTER_SEX</string>
     <string name="TAG_PERS_AGE" translatable="false">PERSO_AGE</string>
     <string name="TAG_COUNT_LINE" translatable="false">LINE_COUNT</string>
-    <string name="TAG_COUNT_DIALOG_LINE" translatable="false">LINE_DIALOG_COUNT</string>
+    <string name="TAG_COUNT_DIALOG_CLICK" translatable="false">CLICK_DIALOG_COUNT</string>
     <string name="TAG_BACKGROUND" translatable="false">ID_BACKGROUNG</string>
     <string name="prefs_first_story_name" translatable="false">first_story</string>
     <string name="hint_click_first_story">Кликни по свитку для начала истории</string>
