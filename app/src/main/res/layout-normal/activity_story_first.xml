@@ -19,15 +19,15 @@
 
     <ImageView
         android:id="@+id/imageWords"
-        android:layout_width="350dp"
-        android:layout_height="883dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.609"
-        app:srcCompat="@drawable/words_author"
+        app:srcCompat="@drawable/words_author_exp"
         android:visibility="visible"/>
 
     <TextView
@@ -38,15 +38,15 @@
         android:gravity="center_vertical"
         android:padding="20dp"
         android:text="@string/hint_click_first_story"
-        android:textSize="@dimen/words_text_size"
         android:textColor="@color/primaryBlack"
+        android:textSize="@dimen/words_text_size"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/imageWords"
         app:layout_constraintEnd_toEndOf="@+id/imageWords"
-        app:layout_constraintHorizontal_bias="0.645"
+        app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="@+id/imageWords"
         app:layout_constraintTop_toTopOf="@+id/imageWords"
-        app:layout_constraintVertical_bias="0.485"
-        android:visibility="visible"/>
+        app:layout_constraintVertical_bias="0.484" />
 
     <ImageView
         android:id="@+id/imageViewLeft"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/words_left_pers"
+        app:srcCompat="@drawable/words_left_pers_exp"
         android:visibility="invisible"/>
 
     <TextView
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="1dp"
-        app:srcCompat="@drawable/words_right_pers"
+        app:srcCompat="@drawable/words_right_pers_exp"
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="40dp"
         android:visibility="invisible"/>
@@ -142,7 +142,7 @@
         app:layout_constraintEnd_toStartOf="@+id/imageButtonRightChoice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/words_left_pers" />
+        app:srcCompat="@drawable/words_left_pers_exp" />
 
     <ImageButton
         android:id="@+id/imageButtonRightChoice"
@@ -154,7 +154,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageBackgr"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/words_left_pers" />
+        app:srcCompat="@drawable/words_left_pers_exp" />
 
     <TextView
         android:id="@+id/textViewLeftChoice"

@@ -15,7 +15,7 @@
         android:elevation="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/button_back" />
+        app:srcCompat="@drawable/button_back_exp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_main"

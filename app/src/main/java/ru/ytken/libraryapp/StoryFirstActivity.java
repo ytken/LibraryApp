@@ -63,9 +63,14 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         buttonRightChoice = findViewById(R.id.imageButtonRightChoice);
         textRightChoice = findViewById(R.id.textViewRightChoice);
 
+        /*
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_LINE),0);
+        editor.apply();*/
+
         String sex = getIntent().getStringExtra("sex");
         switch (sex) {
-            case "M": textId = R.raw.man_author_1; textDialogId = R.raw.man_man_1; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
+            case "M": textId = R.raw.test_author; textDialogId = R.raw.test_man; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
             case "W": textId = R.raw.woman_author_1; textDialogId = R.raw.woman_man_1; nickname = "Woman"; imageGG = findViewById(R.id.imageViewWoman); break;
             default: break;
         }
@@ -121,7 +126,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         else
             countLine = 0;
 
-        if (countDialogLine > 1){
+        if (countDialogLine > 0){
             if (line.contains("Dialog")) {
                 for (int i = 0; i < countDialogLine; i++) {
                     try { lineDialog = readerContinueDialog.readLine();
@@ -133,18 +138,22 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 for (int i = 0; i < countContinue; i++)
                     try {
                         lineDialog = readerDialog.readLine();
-                        Log.d("linescountyeahh", "read");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 int helperCount = countDialogLine; countDialogLine = countContinue;
                 backgr.callOnClick();
                 clicker.setVisibility(View.VISIBLE);
-                for (int i = countContinue; i < helperCount-1; i++) {
+                try {
+                    parseDialog();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                for (int i = countContinue; i < helperCount; i++) {
                     clicker.callOnClick();
                     Log.d("linescountyeahh", "click");
                 }
-                Log.d("continuing", "helper " + helperCount + " line " + lineDialog);
+                Log.d("linescountyeahh", "helper " + helperCount + " line " + lineDialog + " countContinue " + countContinue);
             }
             else {
                 for (int i = 0; i < countDialogLine; i++) {
@@ -160,6 +169,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 lineDialog = readerDialog.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
         Log.d("prefs","count dialog get " + countDialogLine + " with " + lineDialog);
     }
@@ -195,6 +205,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                         countLine++;
                     }
                     if (line==null) finish();
+                    else {
                     Log.d("dialogWords",line);
                     if (line.contains("Image")) {
                         setBackgrIm(line);
@@ -214,31 +225,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             clicker.setVisibility(View.VISIBLE);
                             parseDialog();
                             clicker.setOnClickListener(v1 -> {
+                                countDialogLine++;
                                 try {
                                     parseDialog();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                if (lineDialog.contains("---------")) {
-                                    clicker.setVisibility(View.GONE);
-                                    if (imageLeftView.getVisibility()==View.VISIBLE) {
-                                        OffAnimation(imageLeftView);
-                                        OffAnimation(wordsLeftView);
-                                    }
-                                    if (imageRightView.getVisibility()==View.VISIBLE) {
-                                        OffAnimation(imageRightView);
-                                        OffAnimation(wordsRightView);
-                                    }
-                                    nameSpeakerView.setVisibility(View.INVISIBLE);
-                                    try {
-                                        lineDialog = readerDialog.readLine();
-                                        countDialogLine++;
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
                             });
-
                         }
                         else {
                             if (imageView.getVisibility() == View.GONE || imageView.getVisibility() == View.INVISIBLE) {
@@ -252,10 +245,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                         if (!(line.contains("Dialog") || line.contains("Image"))) {
                             wordsView.setText(line);
                             RunAnimation(wordsView);
-                        }
+                        } }
                     } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 break;
             default:
                 break;
@@ -286,7 +280,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             } else if (lineDialog.contains("***")) {
                 talking = false;
                 lineDialog = readerDialog.readLine();
-                countDialogLine++;
                 setTalkingPerso(lineDialog);
                 //readMore = true;
             } else if (lineDialog.isEmpty()) {
@@ -299,7 +292,17 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 talkingText.setText(lineDialog);
                 RunAnimation(talkingText);
                 //readMore = true;
-            } else if (lineDialog.contains("------")) { //readMore = true;
+            } else if (lineDialog.contains("------")) {
+                clicker.setVisibility(View.GONE);
+                if (imageLeftView.getVisibility()==View.VISIBLE) {
+                    OffAnimation(imageLeftView);
+                    OffAnimation(wordsLeftView);
+                }
+                if (imageRightView.getVisibility()==View.VISIBLE) {
+                    OffAnimation(imageRightView);
+                    OffAnimation(wordsRightView);
+                }
+                nameSpeakerView.setVisibility(View.INVISIBLE);
             } else {
                 setTalkingPerso(lineDialog);
                 //readMore = true;
@@ -307,12 +310,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             if (readMore)
                 try {
                     lineDialog = readerDialog.readLine();
-                    countDialogLine++;
                     Log.d("readDialog", "3 " + lineDialog);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
         }
+        else finish();
     }
 
     void setTalkingPerso(String name) throws IOException {
@@ -325,7 +328,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             RunAnimation(imageLeftView);
             wordsLeftView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
-            countDialogLine++;
             Log.d("readDialog","1");
             wordsLeftView.setText(lineDialog);
             RunAnimation(wordsLeftView);
@@ -353,7 +355,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             RunAnimation(imageRightView);
             wordsRightView.setVisibility(View.VISIBLE);
             lineDialog = readerDialog.readLine();
-            countDialogLine++;
+
             Log.d("readDialog","2");
             Log.d("dialogWords", "In case some perso " + lineDialog);
             wordsRightView.setText(lineDialog);
@@ -365,7 +367,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     void handleChoice() throws IOException {
         lineDialog = readerDialog.readLine();
-        countDialogLine++;
         Log.d("readDialog","4 " + lineDialog);
         if (lineDialog.contains("1)")) {
             textLeftChoice.setText(lineDialog.substring(2));
@@ -373,12 +374,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             while (!lineDialog.isEmpty()) {
                 lineChoice1 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
-                countDialogLine++;
                 Log.d("readDialog","5");
             }
             lineChoice1 += "\n";
             lineDialog = readerDialog.readLine();
-            countDialogLine++;
             Log.d("readDialog","6");
             Log.d("dialogChoice", lineChoice1);
         }
@@ -388,7 +387,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             while (!lineDialog.isEmpty()) {
                 lineChoice2 += "\n" + lineDialog;
                 lineDialog = readerDialog.readLine();
-                countDialogLine++;
                 Log.d("readDialog","7");
             }
             lineChoice2 += "\n";
@@ -439,7 +437,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             }
         }
         clickerInner.setVisibility(View.VISIBLE);
+        Log.d("dialogChoice", "opening clickerInner");
         clickerInner.setOnClickListener(v -> {
+            countDialogLine++;
             if (textChoice.isEmpty()) {
                 Log.d("dialogChoice", "closing clickerInner");
                 clickerInner.setVisibility(View.GONE);

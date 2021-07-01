@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.609"
-        app:srcCompat="@drawable/words_author" />
+        app:srcCompat="@drawable/words_author_exp" />
 
     <TextView
         android:id="@+id/textWords"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/words_left_pers"
+        app:srcCompat="@drawable/words_left_pers_exp"
         android:visibility="invisible"/>
 
     <TextView
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="1dp"
-        app:srcCompat="@drawable/words_right_pers"
+        app:srcCompat="@drawable/words_right_pers_exp"
         tools:layout_editor_absoluteX="45dp"
         tools:layout_editor_absoluteY="40dp"
         android:visibility="gone"/>
@@ -140,7 +140,7 @@
         app:layout_constraintEnd_toStartOf="@+id/imageButtonRightChoice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/words_left_pers"
+        app:srcCompat="@drawable/words_left_pers_exp"
         android:visibility="gone"/>
 
     <ImageButton
@@ -152,7 +152,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageBackgr"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/words_left_pers"
+        app:srcCompat="@drawable/words_left_pers_exp"
         android:visibility="gone"/>
 
     <TextView

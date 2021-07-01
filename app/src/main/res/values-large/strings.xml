@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="words_text_size">45sp</dimen>
+    <dimen name="words_text_size">40sp</dimen>
     <dimen name="names_text_size">30sp</dimen>
     <dimen name="choice_text_size">15sp</dimen>
 </resources>
