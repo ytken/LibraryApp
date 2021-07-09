@@ -1,5 +1,6 @@
 package ru.ytken.libraryapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -34,9 +35,9 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     String line = "", lineDialog = "s", lineChoice1 = "", lineChoice2 = "", nickname = "", wordsPers = "***", namePersoTalk = "", textChoice = "", modeGame="";
     int picId, textId, textDialogId;
-    ImageButton buttonLeftChoice, buttonRightChoice, backButton;
-    ImageView imageView, imageLeftView, imageRightView, backgr, imageGG, imageChar;
-    TextView wordsView, wordsLeftView, wordsRightView, nameSpeakerView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
+    ImageButton backButton;
+    ImageView imageView, imageLeftView, imageRightView, buttonLeftChoice, buttonRightChoice, backgr, imageGG, imageChar;
+    TextView wordsView, wordsLeftView, wordsRightView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
     BufferedReader reader, readerDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
     int countLine = 0, countDialogClick = 0, countDialogNum = 0;
@@ -91,9 +92,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         wordsRightView = findViewById(R.id.textViewRight);
         wordsRightView.setVisibility(View.INVISIBLE);
-
-        nameSpeakerView = findViewById(R.id.textViewNameSpeaker);
-        nameSpeakerView.setVisibility(View.INVISIBLE);
 
         imageChar = findViewById(R.id.imageViewChar);
 
@@ -272,7 +270,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     wordsLeftView.setVisibility(View.INVISIBLE);
                     imageRightView.setVisibility(View.INVISIBLE);
                     wordsRightView.setVisibility(View.INVISIBLE);
-                    nameSpeakerView.setVisibility(View.INVISIBLE);
                     imageGG.setVisibility(View.INVISIBLE);
                     imageChar.setVisibility(View.INVISIBLE);
                     talking = false;
@@ -307,7 +304,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     OffAnimation(imageRightView);
                     OffAnimation(wordsRightView);
                 }
-                nameSpeakerView.setVisibility(View.INVISIBLE);
             } else {
                 setTalkingPerso(lineDialog);
                 //readMore = true;
@@ -323,6 +319,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         else showClosingScreen();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     void setTalkingPerso(String name) throws IOException {
         if (name.contains(nickname)) {
             if (imageRightView.getVisibility()==View.VISIBLE) {
@@ -340,18 +337,20 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             talkingText = wordsLeftView;
             imageChar.setVisibility(View.INVISIBLE);
             imageGG.setVisibility(View.VISIBLE);
-            nameSpeakerView.setVisibility(View.INVISIBLE);
             RunAnimation(imageGG);
         }
         else {
             if (name.contains("Dad")) {
+                imageChar.setImageDrawable(getResources().getDrawable(R.drawable.stiven_cut, null));
                 imageChar.setVisibility(View.VISIBLE);
                 RunAnimation(imageChar);
-                nameSpeakerView.setVisibility(View.INVISIBLE);
             }
             else {
-                nameSpeakerView.setVisibility(View.VISIBLE);
-                nameSpeakerView.setText(name);
+                if (name.contains("Sebastian")) {
+                    imageChar.setImageDrawable(getResources().getDrawable(R.drawable.sebastian_cut, null));
+                    imageChar.setVisibility(View.VISIBLE);
+                    RunAnimation(imageChar);
+                }
             }
             imageGG.setVisibility(View.INVISIBLE);
             imageLeftView.setVisibility(View.INVISIBLE);
@@ -421,6 +420,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         Log.d("lineChoice", "namePersoTalk: " + namePersoTalk + "textChoice: " + textChoice);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     void parseChoiceAction(String textAction) {
         lineChoice1=""; lineChoice2="";
         wordsPers = "***";
@@ -457,7 +457,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     OffAnimation(imageRightView);
                     OffAnimation(wordsRightView);
                 }
-                nameSpeakerView.setVisibility(View.INVISIBLE);
                 this.onClick(backgr);
             }
             else {
@@ -484,13 +483,16 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                             imageGG.setVisibility(View.INVISIBLE);
                         }
                         if (namePersoTalk.contains("Dad")) {
+                            imageChar.setImageDrawable(getResources().getDrawable(R.drawable.stiven_cut, null));
                             imageChar.setVisibility(View.VISIBLE);
                             RunAnimation(imageChar);
-                            nameSpeakerView.setVisibility(View.INVISIBLE);
                         }
                         else {
-                            nameSpeakerView.setVisibility(View.VISIBLE);
-                            nameSpeakerView.setText(namePersoTalk);
+                            if (namePersoTalk.contains("Sebastian")) {
+                                imageChar.setImageDrawable(getResources().getDrawable(R.drawable.sebastian_cut, null));
+                                imageChar.setVisibility(View.VISIBLE);
+                                RunAnimation(imageChar);
+                            }
                         }
                         imageGG.setVisibility(View.INVISIBLE);
                         imageRightView.setVisibility(View.VISIBLE);

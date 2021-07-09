@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
         android:text="@string/hint_click_first_story"
         android:textColor="@color/primaryBlack"
         android:textSize="@dimen/words_text_size"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/imageWords"
         app:layout_constraintEnd_toEndOf="@+id/imageWords"
         app:layout_constraintHorizontal_bias="0.594"
@@ -50,9 +50,10 @@
     <ImageView
         android:id="@+id/imageViewLeft"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:elevation="1dp"
         android:visibility="invisible"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,63 +62,50 @@
 
     <TextView
         android:id="@+id/textViewLeft"
-        android:layout_width="196dp"
-        android:layout_height="99dp"
+        android:layout_width="180dp"
+        android:layout_height="108dp"
         android:elevation="1dp"
         android:fontFamily="@font/marta"
         android:gravity="center"
+        android:text="blabla"
         android:textColor="@color/primaryBlack"
         android:textSize="@dimen/names_text_size"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.392"
+        app:layout_constraintHorizontal_bias="0.376"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.765" />
+        app:layout_constraintVertical_bias="0.829" />
 
     <ImageView
         android:id="@+id/imageViewRight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="1dp"
+        android:scaleType="fitXY"
         android:visibility="invisible"
         app:srcCompat="@drawable/words_right_pers_exp"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="40dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-127dp" />
 
     <TextView
         android:id="@+id/textViewRight"
-        android:layout_width="218dp"
-        android:layout_height="102dp"
+        android:layout_width="190dp"
+        android:layout_height="100dp"
         android:elevation="1dp"
         android:fontFamily="@font/marta"
         android:gravity="center"
+        android:text="blabla"
         android:textColor="@color/primaryBlack"
         android:textSize="@dimen/names_text_size"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.686"
+        app:layout_constraintHorizontal_bias="0.642"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.767" />
-
-    <TextView
-        android:id="@+id/textViewNameSpeaker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/marta"
-        android:text="TextView"
-        android:textColor="@color/primaryBlue"
-        android:textSize="@dimen/words_text_size"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.134" />
+        app:layout_constraintVertical_bias="0.819" />
 
     <TextView
         android:id="@+id/dialogClick"
@@ -132,48 +120,50 @@
 
     <ImageButton
         android:id="@+id/imageButtonLeftChoice"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
+        android:layout_width="206dp"
+        android:layout_height="113dp"
         android:background="@color/transparent"
         android:elevation="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonRightChoice"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.545"
+        app:layout_constraintVertical_bias="0.357"
         app:srcCompat="@drawable/words_left_pers_exp" />
 
     <ImageButton
         android:id="@+id/imageButtonRightChoice"
-        android:layout_width="242dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
+        android:layout_width="206dp"
+        android:layout_height="113dp"
         android:background="@color/transparent"
         android:elevation="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageButtonLeftChoice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.671"
         app:srcCompat="@drawable/words_left_pers_exp" />
 
     <TextView
         android:id="@+id/textViewLeftChoice"
-        android:layout_width="128dp"
-        android:layout_height="58dp"
+        android:layout_width="130dp"
+        android:layout_height="61dp"
         android:elevation="9dp"
         android:fontFamily="@font/marta"
         android:gravity="center"
         android:textColor="@color/primaryBlack"
-        android:textSize="@dimen/choice_text_size"
+        android:textSize="@dimen/names_text_size"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/imageButtonLeftChoice"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonLeftChoice"
-        app:layout_constraintHorizontal_bias="0.339"
+        app:layout_constraintHorizontal_bias="0.644"
         app:layout_constraintStart_toStartOf="@+id/imageButtonLeftChoice"
         app:layout_constraintTop_toTopOf="@+id/imageButtonLeftChoice"
-        app:layout_constraintVertical_bias="0.653" />
+        app:layout_constraintVertical_bias="0.423" />
 
     <TextView
         android:id="@+id/textViewRightChoice"
@@ -183,14 +173,14 @@
         android:fontFamily="@font/marta"
         android:gravity="center"
         android:textColor="@color/primaryBlack"
-        android:textSize="@dimen/choice_text_size"
+        android:textSize="@dimen/names_text_size"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/imageButtonRightChoice"
         app:layout_constraintEnd_toEndOf="@+id/imageButtonRightChoice"
-        app:layout_constraintHorizontal_bias="0.284"
+        app:layout_constraintHorizontal_bias="0.616"
         app:layout_constraintStart_toStartOf="@+id/imageButtonRightChoice"
         app:layout_constraintTop_toTopOf="@+id/imageButtonRightChoice"
-        app:layout_constraintVertical_bias="0.651" />
+        app:layout_constraintVertical_bias="0.426" />
 
     <TextView
         android:id="@+id/clickerInner"
