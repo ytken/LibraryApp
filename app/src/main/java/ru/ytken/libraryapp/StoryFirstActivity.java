@@ -2,7 +2,6 @@ package ru.ytken.libraryapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -37,7 +37,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     int picId, textId, textDialogId;
     ImageButton backButton;
     ImageView imageView, imageLeftView, imageRightView, buttonLeftChoice, buttonRightChoice, backgr, imageGG, imageChar;
-    TextView wordsView, wordsLeftView, wordsRightView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner;
+    TextView wordsView, wordsLeftView, wordsRightView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner, clickerChoice;
     BufferedReader reader, readerDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
     int countLine = 0, countDialogClick = 0, countDialogNum = 0;
@@ -74,10 +74,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         buttonRightChoice = findViewById(R.id.imageButtonRightChoice);
         textRightChoice = findViewById(R.id.textViewRightChoice);
 
-
+        /*
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
         editor.apply();
+         */
 
         String sex = getIntent().getStringExtra("sex");
         switch (sex) {
@@ -97,6 +98,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         clicker = findViewById(R.id.dialogClick);
         clickerInner = findViewById(R.id.clickerInner);
+        clickerChoice = findViewById(R.id.clickerChoice);
 
         reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
         readerDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
@@ -183,7 +185,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             case "black": picId = R.drawable.black_screen; break;
             case "white": picId = R.drawable.while_flash; break;
             case "smoke": picId = R.drawable.smoke; break;
-            case "workshop": picId = R.drawable.royal_workshop; break;
+            case "royal_workshop": picId = R.drawable.royal_workshop; break;
+            case "mechanism": picId = R.drawable.mechanism; break;
+            case "lotusspace": picId = R.drawable.lotusspace; break;
+            case "spaceladder": picId = R.drawable.spaceladder; break;
+            case "space": picId = R.drawable.space; break;
+            case "dad_workshop": picId = R.drawable.dad_workshop; break;
             case "bomb": picId = R.drawable.bomb_town; break;
             default: picId = 0; break;
         }
@@ -371,6 +378,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     void handleChoice() throws IOException {
         lineDialog = readerDialog.readLine();
+        clickerChoice.setVisibility(View.VISIBLE);
+        clickerChoice.setOnClickListener(v -> { });
         Log.d("readDialog","4 " + lineDialog);
         if (lineDialog.contains("1)")) {
             textLeftChoice.setText(lineDialog.substring(2));
@@ -447,6 +456,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             countDialogClick++;
             if (textChoice.isEmpty()) {
                 Log.d("dialogChoice", "closing clickerInner");
+                clickerChoice.setVisibility(View.GONE);
                 clickerInner.setVisibility(View.GONE);
                 if (imageLeftView.getVisibility()==View.VISIBLE) {
                     OffAnimation(imageLeftView);
@@ -634,10 +644,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         Log.d("wai", "remove");
         setResult(RESULT_OK);
         this.finish();
-    }
-
-    public interface shouldSave {
-        void setFlag(boolean flag);
     }
 
 }

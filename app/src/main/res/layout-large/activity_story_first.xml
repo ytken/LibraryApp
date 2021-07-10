@@ -124,10 +124,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/clickerChoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="8dp"
+        android:visibility="gone"/>
+
     <ImageView
         android:id="@+id/imageButtonLeftChoice"
         android:layout_width="417dp"
-        android:layout_height="366dp"
+        android:layout_height="250dp"
         android:background="@color/transparent"
         android:elevation="8dp"
         android:visibility="invisible"
@@ -142,7 +149,7 @@
     <ImageView
         android:id="@+id/imageButtonRightChoice"
         android:layout_width="417dp"
-        android:layout_height="366dp"
+        android:layout_height="250dp"
         android:background="@color/transparent"
         android:elevation="8dp"
         android:visibility="invisible"

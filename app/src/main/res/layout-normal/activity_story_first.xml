@@ -133,6 +133,13 @@
         app:layout_constraintVertical_bias="0.357"
         app:srcCompat="@drawable/words_left_pers_exp" />
 
+    <TextView
+        android:id="@+id/clickerChoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="8dp"
+        android:visibility="gone"/>
+
     <ImageButton
         android:id="@+id/imageButtonRightChoice"
         android:layout_width="206dp"

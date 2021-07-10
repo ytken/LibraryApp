@@ -20,7 +20,7 @@ public class StoryFirstSetNameActivity extends AppCompatActivity implements AskN
         res = getResources();
 
         backButton = findViewById(R.id.story_button_back);
-        backButton.setImageDrawable(res.getDrawable(R.drawable.button_back_exp));
+        backButton.setImageDrawable(res.getDrawable(R.drawable.button_back_exp, null));
         backButton.setOnClickListener(v -> finish());
 
         buttonWoman = findViewById(R.id.button_woman);

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recycler;
     ImageButton buttonBack;
     TextView textCoins;
+    ImageView frameCoins, imageSettings;
     SharedPreferences sPref; SharedPreferences.Editor editor;
     RecAdapter adapter;
     Integer coins;
@@ -41,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sPref = getSharedPreferences(getResources().getString(R.string.prefs_first_story_name),MODE_PRIVATE);
         editor = sPref.edit();
+
+        frameCoins = findViewById(R.id.frameCoins);
+        frameCoins.setOnClickListener(v -> {
+            Toast.makeText(this, "Здесь будет магазин", Toast.LENGTH_LONG).show();
+        });
+
+        imageSettings = findViewById(R.id.imageViewSettings);
+        imageSettings.setOnClickListener(v -> {
+            Toast.makeText(this, "Здесь будут настройки", Toast.LENGTH_LONG).show();
+        });
 
         recycler = findViewById(R.id.recycler_main);
         LinearLayoutManager layoutManager
