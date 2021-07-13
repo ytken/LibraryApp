@@ -40,8 +40,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     TextView wordsView, wordsLeftView, wordsRightView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner, clickerChoice;
     BufferedReader reader, readerDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
-    int countLine = 0, countDialogClick = 0, countDialogNum = 0;
-    int st_courage = 0, st_determ = 0, st_atten = 0, st_resist = 0;
+    int countLine = 0, countDialogClick = 0, countDialogNum = 0, countChoiceWay = 0, countChoiceLine = 0;
+    int st_courage = 0, st_determ = 0, st_atten = 0, st_resist = 0, st_sebtrust = 0;
     boolean talking = false, continueDialog = false, readMore = true;
     int coins;
     int linearWidth = 0, linearHeight = 0;
@@ -77,6 +77,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         /*
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
         editor.apply();
          */
 
@@ -107,12 +108,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         st_atten = sPref.getInt(getResources().getString(R.string.STATE_ATTENTION), 0);
         st_determ = sPref.getInt(getResources().getString(R.string.STATE_DETERMINATION), 0);
         st_resist = sPref.getInt(getResources().getString(R.string.STATE_RESISTANCE), 0);
+        st_sebtrust = sPref.getInt(getString(R.string.TAG_ST_SEB_TRUST), 0);
 
         coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), 0);
 
         countLine = sPref.getInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
         countDialogClick = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK), 0);
         countDialogNum = sPref.getInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
+        countChoiceWay = sPref.getInt(getResources().getString(R.string.TAG_CHOICE_WAY), 0);
+        countChoiceLine = sPref.getInt(getResources().getString(R.string.TAG_CHOICE_LINE), 0);
 
         backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
         Log.d("linescountyeahh", "line count " + countLine + " click dialog count " + countDialogClick + " num dialog count " + countDialogNum);
@@ -162,7 +166,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 }*/
                 int helperClick = countDialogClick; countDialogClick = 0;
                 for (int i = 0; i < helperClick; i++) {
-                    clicker.callOnClick();
+                    if (clickerChoice.getVisibility() == View.VISIBLE) {
+                        if (countChoiceWay == 1)
+                            buttonLeftChoice.callOnClick();
+                        else
+                            buttonRightChoice.callOnClick();
+                    }
+                    else
+                        clicker.callOnClick();
+
                     Log.d("linescountyeahh", "click");
                 }
             }
@@ -291,27 +303,23 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 //readMore = true;
             } else if (lineDialog.isEmpty()) {
                 talking = false;
-                imageGG.setVisibility(View.INVISIBLE);
-                imageChar.setVisibility(View.INVISIBLE);
+                if (imageLeftView.getVisibility() == View.VISIBLE) {
+                    imageGG.setVisibility(View.INVISIBLE);
+                    OffAnimation(imageLeftView);
+                    OffAnimation(wordsLeftView);
+                }
+                else {
+                    imageChar.setVisibility(View.INVISIBLE);
+                    OffAnimation(imageRightView);
+                    OffAnimation(wordsRightView);
+                }
                 //readMore = true;
             } else if (talking) {
                 Log.d("dialogWords", "In case talking " + lineDialog);
                 talkingText.setText(lineDialog);
                 RunAnimation(talkingText);
                 //readMore = true;
-            } else if (lineDialog.contains("------")) {
-                countDialogNum ++;
-                countDialogClick = 0;
-                clicker.setVisibility(View.GONE);
-                if (imageLeftView.getVisibility()==View.VISIBLE) {
-                    OffAnimation(imageLeftView);
-                    OffAnimation(wordsLeftView);
-                }
-                if (imageRightView.getVisibility()==View.VISIBLE) {
-                    OffAnimation(imageRightView);
-                    OffAnimation(wordsRightView);
-                }
-            } else {
+            }  else {
                 setTalkingPerso(lineDialog);
                 //readMore = true;
             }
@@ -322,6 +330,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+            if (lineDialog.contains("------")) {
+                lineDialog = readerDialog.readLine();
+                countDialogNum ++;
+                countDialogClick = 0;
+                clicker.setVisibility(View.GONE);
+            }
         }
         else showClosingScreen();
     }
@@ -411,6 +426,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         textLeftChoice.setVisibility(View.VISIBLE);
         RunAnimation(textLeftChoice);
         buttonLeftChoice.setOnClickListener(v -> {
+            countChoiceWay = 1;
             parseChoiceAction(lineChoice1.substring(lineChoice1.indexOf("\n")+1));
         });
 
@@ -419,6 +435,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         textRightChoice.setVisibility(View.VISIBLE);
         RunAnimation(textRightChoice);
         buttonRightChoice.setOnClickListener(v -> {
+            countChoiceWay = 2;
             parseChoiceAction(lineChoice2.substring(lineChoice2.indexOf("\n")+1));
         });
     }
@@ -442,11 +459,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         textChoice = textChoice.substring(textChoice.indexOf("\n")+1);
         namePersoTalk = textChoice.substring(0,textChoice.indexOf("\n"));
         if(namePersoTalk.contains(" ")){
+            int figToAdd = Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+2));
             switch (namePersoTalk.substring(0,namePersoTalk.indexOf(" "))) {
-                case "отвага": st_courage += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
-                case "решительность": st_determ += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
-                case "внимательность": st_atten += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
-                case "стойкость": st_resist += Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+1)); switchStateAction(); break;
+                case "отвага": st_courage += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "решительность": st_determ += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "внимательность": st_atten += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "стойкость": st_resist += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "довериеСеб": st_sebtrust += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
                 default: break;
             }
         }
@@ -467,9 +486,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     OffAnimation(imageRightView);
                     OffAnimation(wordsRightView);
                 }
+                countChoiceWay = 0;
+                countChoiceLine = 0;
                 this.onClick(backgr);
             }
             else {
+                countChoiceLine++;
                 if (wordsPers.contains("***")) {
                     namePersoTalk = textChoice.substring(0, textChoice.indexOf("\n"));
                     textChoice = textChoice.substring(textChoice.indexOf("\n") + 1);
@@ -618,6 +640,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         editor.putInt(getString(R.string.STATE_DETERMINATION), st_determ);
         editor.putInt(getString(R.string.STATE_RESISTANCE), st_resist);
         editor.putInt(getString(R.string.COIN_NUMBER), coins);
+        editor.putInt(getString(R.string.TAG_CHOICE_WAY), countChoiceWay);
+        editor.putInt(getString(R.string.TAG_CHOICE_LINE), countChoiceLine);
         editor.apply();
         StoryFirstActivity.this.setResult(RESULT_CANCELED);
         super.onDestroy();

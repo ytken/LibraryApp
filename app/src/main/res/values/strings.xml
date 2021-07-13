@@ -33,5 +33,8 @@
     <string name="COIN_NUMBER">COIN_NUMBER</string>
     <string name="CLICK_DIALOG_COUNT">CLICK_DIALOG_COUNT</string>
     <string name="TAG_COUNT_DIALOG_NUM">COUNT_DIALOG_NUM</string>
+    <string name="TAG_ST_SEB_TRUST">ST_SEB_TRUST</string>
+    <string name="TAG_CHOICE_WAY">CHOICE_WAY</string>
+    <string name="TAG_CHOICE_LINE">CHOICE_LINE</string>
 
 </resources>
