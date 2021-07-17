@@ -6,8 +6,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ru.ytken.libraryapp.dialogs.DialogSaving;
 import ru.ytken.libraryapp.recycler.RecAdapter;
 import ru.ytken.libraryapp.recycler.StoryItem;
 
