@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,7 @@ public class DialogContinueGame extends DialogFragment {
                     editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
                     editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
                     editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
+
                     editor.apply();
                     removable.remove();
                 })

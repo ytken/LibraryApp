@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,9 +81,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         editor.apply();
          */
 
+
         String sex = getIntent().getStringExtra("sex");
         switch (sex) {
-            case "M": textId = R.raw.man_author_1; textDialogId = R.raw.man_man_1; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
+            case "M": textId = R.raw.test_author; textDialogId = R.raw.test_man; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
             case "W": textId = R.raw.woman_author_1; textDialogId = R.raw.woman_man_1; nickname = "Woman"; imageGG = findViewById(R.id.imageViewWoman); break;
             default: break;
         }
@@ -200,6 +202,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         st_determ = sPref.getInt(getResources().getString(R.string.STATE_DETERMINATION), 0);
         st_resist = sPref.getInt(getResources().getString(R.string.STATE_RESISTANCE), 0);
         st_sebtrust = sPref.getInt(getString(R.string.TAG_ST_SEB_TRUST), 0);
+
+        Log.d("statesF", "getting state: " + st_courage);
 
         coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), 0);
 
@@ -550,11 +554,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         if(namePersoTalk.contains(" ")){
             int figToAdd = Integer.parseInt(namePersoTalk.substring(namePersoTalk.indexOf(" ")+2));
             switch (namePersoTalk.substring(0,namePersoTalk.indexOf(" "))) {
-                case "отвага": st_courage += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
-                case "решительность": st_determ += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
-                case "внимательность": st_atten += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
-                case "стойкость": st_resist += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
-                case "довериеСеб": st_sebtrust += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "отвага": st_courage += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1,namePersoTalk.indexOf(" ")+2).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "решительность": st_determ += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1,namePersoTalk.indexOf(" ")+2).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "внимательность": st_atten += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1,namePersoTalk.indexOf(" ")+2).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "стойкость": st_resist += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1,namePersoTalk.indexOf(" ")+2).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
+                case "довериеСеб": st_sebtrust += (namePersoTalk.substring(namePersoTalk.indexOf(" ")+1,namePersoTalk.indexOf(" ")+2).equals("+")) ? figToAdd : figToAdd*(-1); switchStateAction(); break;
                 default: break;
             }
         }
@@ -565,9 +569,37 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     private void showClosingScreen() {
         LayoutInflater li = LayoutInflater.from(StoryFirstActivity.this);
+        LinearLayout linear = (LinearLayout)li.inflate(R.layout.coin_fragment_dialog, null);
+        Button close = linear.findViewById(R.id.buttonGet15);
+        close.setOnClickListener(v -> {
+            countLine = 0;
+            countDialogClick = 0;
+            countDialogNum = 0;
+            /*editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
+            editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
+            editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
+            editor.apply();*/
+            StoryFirstActivity.this.remove();
+        });
+        TextView showStates = linear.findViewById(R.id.showGottenStates);
+        StringBuilder builder = new StringBuilder();
+
+        builder.append((st_courage > 0) ? "отвага: " : "???:").append(st_courage).append("\n");
+        builder.append((st_determ > 0) ? "решительность: " : "???:").append(st_determ).append("\n");
+        builder.append((st_atten > 0) ? "внимательность: " : "???:").append(st_atten).append("\n");
+        builder.append((st_resist > 0) ? "стойкость: " : "???:").append(st_resist).append("\n");
+        builder.append((st_sebtrust > 0) ? "доверие к Себу: " : "???:").append(st_sebtrust);
+        showStates.setText(builder.toString());
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(StoryFirstActivity.this);
+        alert.setView(linear);
+        alert.show();
+
+        /*
+        LayoutInflater li = LayoutInflater.from(StoryFirstActivity.this);
         LinearLayout linear = (LinearLayout)li.inflate(R.layout.linear, null);
         linearWidth = linear.getWidth(); linearHeight = linear.getHeight();
-        float values[] = {st_courage, st_atten, st_resist, st_determ};
+        float values[] = {st_courage, st_atten, st_resist, st_determ, st_sebtrust};
 
         values=calculateData(values);
         linear.addView(new MyGraphview(this,values));
@@ -577,6 +609,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         alert.setPositiveButton("ОК", (dialog, which) -> {
             StoryFirstActivity.this.remove();
         }).show();
+         */
     }
 
     private float[] calculateData(float[] data) {
