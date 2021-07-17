@@ -84,7 +84,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         String sex = getIntent().getStringExtra("sex");
         switch (sex) {
-            case "M": textId = R.raw.test_author; textDialogId = R.raw.test_man; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
+            case "M": textId = R.raw.man_author_1; textDialogId = R.raw.man_man_1; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
             case "W": textId = R.raw.woman_author_1; textDialogId = R.raw.woman_man_1; nickname = "Woman"; imageGG = findViewById(R.id.imageViewWoman); break;
             default: break;
         }
