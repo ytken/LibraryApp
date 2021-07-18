@@ -78,8 +78,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
+        editor.putInt(getString(R.string.TAG_CHOICE_WAY), 0);
+        editor.putInt(getString(R.string.TAG_CHOICE_LINE), 0);
         editor.apply();
          */
+
 
 
         String sex = getIntent().getStringExtra("sex");
@@ -118,10 +121,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 Log.d("dialogChoice", "closing clickerInner");
                 clickerChoice.setVisibility(View.GONE);
                 clickerInner.setVisibility(View.GONE);
+                modeGame = "";
+                countDialogNum ++;
+                countDialogClick = 0;
+                countChoiceWay = 0;
+                countChoiceLine = 0;
                 if (imageLeftView.getVisibility()==View.VISIBLE) {
                     OffAnimation(imageLeftView);
                     OffAnimation(wordsLeftView);
-                    //TODO OffAnimation(imageTalking);
+
                 }
                 if (imageRightView.getVisibility()==View.VISIBLE) {
                     OffAnimation(imageRightView);
@@ -142,6 +150,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                         if(imageRightView.getVisibility()==View.VISIBLE) {
                             OffAnimation(imageRightView);
                             OffAnimation(wordsRightView);
+                            imageChar.setVisibility(View.INVISIBLE);
                         }
                         imageGG.setVisibility(View.VISIBLE);
                         imageLeftView.setVisibility(View.VISIBLE);
@@ -192,6 +201,16 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+        buttonLeftChoice.setOnClickListener(v -> {
+            countChoiceWay = 1;
+            parseChoiceAction(lineChoice1.substring(lineChoice1.indexOf("\n")+1));
+        });
+
+        buttonRightChoice.setOnClickListener(v -> {
+            countChoiceWay = 2;
+            parseChoiceAction(lineChoice2.substring(lineChoice2.indexOf("\n")+1));
+        });
+
         clickerChoice.setOnClickListener(v -> { });
 
         reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
@@ -215,6 +234,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
         Log.d("linescountyeahh", "line count " + countLine + " click dialog count " + countDialogClick + " num dialog count " + countDialogNum);
+        Log.d("linescountyeahh", "choice way " + countChoiceWay + " choice line " + countChoiceLine);
         if (countLine > 1) {
             for (int i = 0; i < countLine; i++) {
                 try {
@@ -259,16 +279,27 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 clicker.setVisibility(View.VISIBLE);
                 int helperClick = countDialogClick; countDialogClick = 0;
                 for (int i = 0; i < helperClick; i++) {
-                    /*if (clickerChoice.getVisibility() == View.VISIBLE) {
+                    Log.d("helperClick", lineDialog);
+                    if (lineDialog.contains("Choice")) {
+                        clicker.callOnClick();
+                        Log.d("helperClick", "going way " + countChoiceWay + " with " + countChoiceLine);
+                        int helperCountChoiceLine = countChoiceLine; countChoiceLine = 0;
+                        continueDialog = true;
                         if (countChoiceWay == 1)
                             buttonLeftChoice.callOnClick();
                         if (countChoiceWay == 2)
                             buttonRightChoice.callOnClick();
+                        for (int j = 0; j < helperCountChoiceLine; j++) {
+                            clickerInner.callOnClick();
+                            Log.d("helper click", "actual choice click");
+                        }
                     }
-                    else*/
-                    clicker.callOnClick();
-                    Log.d("linescountyeahh", "click Dialog");
+                    else {
+                        clicker.callOnClick();
+                        Log.d("linescountyeahh", "click Dialog");
+                    }
                 }
+                continueDialog = false;
             }
             else {
                 try {
@@ -302,6 +333,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             case "space": picId = R.drawable.space; break;
             case "dad_workshop": picId = R.drawable.dad_workshop; break;
             case "bomb": picId = R.drawable.bomb_town; break;
+            case "main_pers_room": picId = R.drawable.main_pers_room; break;
             default: picId = 0; break;
         }
         if (picId == 0)
@@ -316,8 +348,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             case R.id.imageBackgr:
             case R.id.imageWords:
                 try {
-                    if (continueDialog)
+                    if (continueDialog) {
                         continueDialog = false;
+                        Log.d("continuedialog", "setting to false");
+                    }
+
                     else {
                         line = reader.readLine();
                         countLine++;
@@ -424,12 +459,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     e.printStackTrace();
                 }
 
-            if (lineDialog.contains("------")) {
+            if (lineDialog.contains("------"))  {
                 lineDialog = readerDialog.readLine();
-                countDialogNum ++;
-                countDialogClick = 0;
                 clicker.setVisibility(View.GONE);
                 continueDialog = false;
+                Log.d("continuedialog", "setting to false");
+                if (!modeGame.equals("Choice")) {
+                    countDialogNum ++;
+                    countDialogClick = 0;
+                }
             }
         }
         else showClosingScreen();
@@ -441,6 +479,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             if (imageRightView.getVisibility()==View.VISIBLE) {
                 OffAnimation(imageRightView);
                 OffAnimation(wordsRightView);
+                OffAnimation(imageChar);
             }
             imageLeftView.setVisibility(View.VISIBLE);
             RunAnimation(imageLeftView);
@@ -451,7 +490,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             RunAnimation(wordsLeftView);
             talking = true;
             talkingText = wordsLeftView;
-            imageChar.setVisibility(View.INVISIBLE);
             imageGG.setVisibility(View.VISIBLE);
             RunAnimation(imageGG);
         }
@@ -461,12 +499,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 imageChar.setVisibility(View.VISIBLE);
                 RunAnimation(imageChar);
             }
-            else {
-                if (name.contains("Sebastian")) {
-                    imageChar.setImageDrawable(getResources().getDrawable(R.drawable.sebastian_cut, null));
-                    imageChar.setVisibility(View.VISIBLE);
-                    RunAnimation(imageChar);
-                }
+            if (name.contains("Sebastian")) {
+                imageChar.setImageDrawable(getResources().getDrawable(R.drawable.sebastian_cut, null));
+                imageChar.setVisibility(View.VISIBLE);
+                RunAnimation(imageChar);
             }
             imageGG.setVisibility(View.INVISIBLE);
             imageLeftView.setVisibility(View.INVISIBLE);
@@ -518,19 +554,11 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         RunAnimation(buttonLeftChoice);
         textLeftChoice.setVisibility(View.VISIBLE);
         RunAnimation(textLeftChoice);
-        buttonLeftChoice.setOnClickListener(v -> {
-            countChoiceWay = 1;
-            parseChoiceAction(lineChoice1.substring(lineChoice1.indexOf("\n")+1));
-        });
 
         buttonRightChoice.setVisibility(View.VISIBLE);
         RunAnimation(buttonRightChoice);
         textRightChoice.setVisibility(View.VISIBLE);
         RunAnimation(textRightChoice);
-        buttonRightChoice.setOnClickListener(v -> {
-            countChoiceWay = 2;
-            parseChoiceAction(lineChoice2.substring(lineChoice2.indexOf("\n")+1));
-        });
     }
 
     void switchStateAction() {
@@ -543,7 +571,6 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     void parseChoiceAction(String textAction) {
         lineChoice1=""; lineChoice2="";
         wordsPers = "***";
-        modeGame = "";
         textChoice = textAction;
         buttonLeftChoice.setVisibility(View.GONE);
         textLeftChoice.setVisibility(View.GONE);
@@ -564,7 +591,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         }
         clickerInner.setVisibility(View.VISIBLE);
         Log.d("dialogChoice", "opening clickerInner");
-        clickerInner.callOnClick();
+        if (!continueDialog)
+            clickerInner.callOnClick();
     }
 
     private void showClosingScreen() {
