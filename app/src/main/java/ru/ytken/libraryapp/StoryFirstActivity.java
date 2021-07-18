@@ -74,16 +74,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         buttonRightChoice = findViewById(R.id.imageButtonRightChoice);
         textRightChoice = findViewById(R.id.textViewRightChoice);
 
-        /*
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
-        editor.putInt(getString(R.string.TAG_CHOICE_WAY), 0);
-        editor.putInt(getString(R.string.TAG_CHOICE_LINE), 0);
-        editor.apply();
-         */
-
-
+        //progressToNull();
 
         String sex = getIntent().getStringExtra("sex");
         switch (sex) {
@@ -216,13 +207,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(textId)));
         readerDialog = new BufferedReader(new InputStreamReader(getResources().openRawResource(textDialogId)));
 
-        st_courage = sPref.getInt(getResources().getString(R.string.STATE_COURAGE), 0);
-        st_atten = sPref.getInt(getResources().getString(R.string.STATE_ATTENTION), 0);
-        st_determ = sPref.getInt(getResources().getString(R.string.STATE_DETERMINATION), 0);
-        st_resist = sPref.getInt(getResources().getString(R.string.STATE_RESISTANCE), 0);
-        st_sebtrust = sPref.getInt(getString(R.string.TAG_ST_SEB_TRUST), 0);
-
-        Log.d("statesF", "getting state: " + st_courage);
+        initializeStates();
 
         coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), 0);
 
@@ -300,6 +285,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                     }
                 }
                 continueDialog = false;
+                initializeStates();
             }
             else {
                 try {
@@ -340,6 +326,14 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.black_screen, null));
         else
             backgr.setImageDrawable(ResourcesCompat.getDrawable(getResources(), picId, null));
+    }
+
+    private void initializeStates() {
+        st_courage = sPref.getInt(getResources().getString(R.string.STATE_COURAGE), 0);
+        st_atten = sPref.getInt(getResources().getString(R.string.STATE_ATTENTION), 0);
+        st_determ = sPref.getInt(getResources().getString(R.string.STATE_DETERMINATION), 0);
+        st_resist = sPref.getInt(getResources().getString(R.string.STATE_RESISTANCE), 0);
+        st_sebtrust = sPref.getInt(getString(R.string.TAG_ST_SEB_TRUST), 0);
     }
 
     @Override
@@ -697,6 +691,15 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             }
 
         }
+    }
+
+    private void progressToNull() {
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
+        editor.putInt(getString(R.string.TAG_CHOICE_WAY), 0);
+        editor.putInt(getString(R.string.TAG_CHOICE_LINE), 0);
+        editor.apply();
     }
 
     @Override
