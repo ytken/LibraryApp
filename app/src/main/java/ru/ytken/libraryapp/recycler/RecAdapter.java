@@ -31,9 +31,9 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> implements RecHo
         this.listener = listener;
         data = new ArrayList<>();
         StoryItem firstStory = new StoryItem(1, R.drawable.cover);
-        StoryItem loadStory = new StoryItem(0, R.drawable.loading);
+        //StoryItem loadStory = new StoryItem(0, R.drawable.loading);
         data.add(firstStory);
-        data.add(loadStory);
+        //data.add(loadStory);
     }
 
     @NonNull

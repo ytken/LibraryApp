@@ -11,6 +11,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         // cold launches take some time
-        SystemClock.sleep(TimeUnit.SECONDS.toMillis(8));
+        SystemClock.sleep(TimeUnit.SECONDS.toMillis(2000));
     }
 }

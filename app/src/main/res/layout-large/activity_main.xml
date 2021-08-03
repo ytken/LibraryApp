@@ -42,8 +42,9 @@
 
     <TextView
         android:id="@+id/textViewCoins"
-        android:layout_width="66dp"
-        android:layout_height="39dp"
+        android:layout_width="80dp"
+        android:layout_height="44dp"
+        android:padding="5dp"
         android:fontFamily="@font/marta"
         android:gravity="right"
         android:text="TextView"
@@ -51,10 +52,10 @@
         android:textSize="@dimen/names_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/frameCoins"
         app:layout_constraintEnd_toEndOf="@+id/frameCoins"
-        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintHorizontal_bias="0.57"
         app:layout_constraintStart_toStartOf="@+id/frameCoins"
         app:layout_constraintTop_toTopOf="@+id/frameCoins"
-        app:layout_constraintVertical_bias="0.487" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageView
         android:id="@+id/imageViewSettings"

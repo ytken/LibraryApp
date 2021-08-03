@@ -13,12 +13,8 @@
         android:layout_height="60dp"
         android:background="@android:color/transparent"
         android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02"
         app:srcCompat="@drawable/button_back_exp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -40,8 +36,9 @@
 
     <TextView
         android:id="@+id/textViewCoins"
-        android:layout_width="52dp"
-        android:layout_height="30dp"
+        android:layout_width="60dp"
+        android:layout_height="32dp"
+        android:padding="3dp"
         android:fontFamily="@font/marta"
         android:gravity="right"
         android:text="TextView"
@@ -49,7 +46,7 @@
         android:textSize="@dimen/names_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/frameCoins"
         app:layout_constraintEnd_toEndOf="@+id/frameCoins"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.57"
         app:layout_constraintStart_toStartOf="@+id/frameCoins"
         app:layout_constraintTop_toTopOf="@+id/frameCoins" />
 
