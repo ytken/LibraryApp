@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recycler;
     ImageButton buttonBack;
+    Button buttonDeletePrefs;
     TextView textCoins;
     ImageView frameCoins, imageSettings;
     SharedPreferences sPref; SharedPreferences.Editor editor;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         sPref = getSharedPreferences(getResources().getString(R.string.prefs_first_story_name),MODE_PRIVATE);
         editor = sPref.edit();
@@ -62,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
         buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(v -> finish());
+
+        buttonDeletePrefs = findViewById(R.id.buttonDeletePrefs);
+        buttonDeletePrefs.setOnClickListener(v -> setButtonDeletePrefs());
 
         textCoins = findViewById(R.id.textViewCoins);
         coins = sPref.getInt(getResources().getString(R.string.COIN_NUMBER), -1);
@@ -154,6 +160,16 @@ public class MainActivity extends AppCompatActivity {
             return v;
         }
 
+    }
+
+    void setButtonDeletePrefs() {
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK), 0);
+        editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
+        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
+        editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
+        editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), -1);
+        editor.apply();
     }
 
 }

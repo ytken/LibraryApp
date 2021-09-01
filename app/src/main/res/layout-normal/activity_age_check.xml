@@ -10,7 +10,7 @@
     android:paddingEnd="20dp"
     android:theme="@style/Theme.LibraryApp"
     android:background="@color/primaryWhite"
-    tools:context=".SplashActivity">
+    tools:context=".AskAgeActivity">
 
     <Button
         android:id="@+id/buttonSetDate"

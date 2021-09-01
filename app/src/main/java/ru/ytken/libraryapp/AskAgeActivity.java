@@ -3,13 +3,11 @@ package ru.ytken.libraryapp;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Process;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-public class SplashActivity extends AppCompatActivity {
+public class AskAgeActivity extends AppCompatActivity {
 
     private EditText editTextSetBirthdate;
     private TextView mInfoTextView;
@@ -33,16 +31,11 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_age_check);
 
         sPref = getSharedPreferences(getResources().getString(R.string.prefs_first_story_name),MODE_PRIVATE);
         editor = sPref.edit();
-        age = sPref.getInt(getResources().getString(R.string.TAG_PERS_AGE), -1);
-        if (age>0) {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
         mInfoTextView = findViewById(R.id.textAgeDate);
         Calendar today = Calendar.getInstance();
         mInfoTextView.setText("Введите вашу дату рождения:");
@@ -65,7 +58,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (age >= 18) {
                         editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), age);
                         editor.apply();
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        Intent intent = new Intent(AskAgeActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -75,11 +68,11 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(SplashActivity.this, "Неверная дата!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AskAgeActivity.this, "Неверная дата!", Toast.LENGTH_SHORT).show();
                 }
             }
             else {
-                Toast.makeText(SplashActivity.this, "Введите корректную дату", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AskAgeActivity.this, "Введите корректную дату", Toast.LENGTH_SHORT).show();
             }
         });
 

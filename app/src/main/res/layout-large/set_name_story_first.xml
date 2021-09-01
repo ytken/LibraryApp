@@ -32,6 +32,7 @@
         android:id="@+id/button_woman"
         android:layout_width="315dp"
         android:layout_height="767dp"
+        android:scaleType="fitXY"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

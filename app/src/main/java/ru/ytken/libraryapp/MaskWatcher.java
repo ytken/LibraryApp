@@ -42,7 +42,7 @@ public class MaskWatcher implements TextWatcher {
         isRunning = true;
 
         int editableLength = editable.length();
-        if (editableLength < mask.length()) {
+        if (editableLength > 0 && editableLength < mask.length()) {
             if (mask.charAt(editableLength) != '#') {
                 editable.append(mask.charAt(editableLength));
             } else if (mask.charAt(editableLength-1) != '#') {
