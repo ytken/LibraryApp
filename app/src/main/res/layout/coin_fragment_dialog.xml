@@ -10,10 +10,9 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1.5"
         android:gravity="center"
-        android:padding="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
@@ -25,7 +24,7 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1.5"
         android:text="+15"
         android:layout_marginLeft="20dp"
@@ -37,8 +36,8 @@
     <TextView
         android:id="@+id/showGottenStates"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="11"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
         android:layout_margin="10dp"
         android:text="jkwfjr"
         android:textSize="@dimen/big_text_size"
@@ -48,7 +47,7 @@
     <Button
         android:id="@+id/buttonGet15"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_margin="20dp"
         android:text="Принять"

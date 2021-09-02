@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if (resultCode == RESULT_OK) {
-                coins += 10;
+                coins += 15;
                 textCoins.setText(coins.toString());
                 //adapter.onStoryClicked(0);
             }

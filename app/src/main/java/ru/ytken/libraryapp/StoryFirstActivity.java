@@ -45,7 +45,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     int countLine = 0, countDialogClick = 0, countDialogNum = 0, countChoiceWay = 0, countChoiceLine = 0;
     int st_courage = 0, st_determ = 0, st_atten = 0, st_resist = 0, st_sebtrust = 0;
     boolean talking = false, continueDialog = false, readMore = true;
-    int coins, linearWidth = 0, linearHeight = 0;
+    int coins;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         String sex = getIntent().getStringExtra("sex");
         switch (sex) {
-            case "M": textId = R.raw.man_author_1; textDialogId = R.raw.man_man_1; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
+            case "M": textId = R.raw.test_author; textDialogId = R.raw.test_man; nickname = "Man"; imageGG = findViewById(R.id.imageViewMan); break;
             case "W": textId = R.raw.woman_author_1; textDialogId = R.raw.woman_man_1; nickname = "Woman"; imageGG = findViewById(R.id.imageViewWoman); break;
             default: break;
         }
@@ -195,11 +195,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         });
 
         buttonLeftChoice.setOnClickListener(v -> {
+            Log.d("buutton", "left choice");
             countChoiceWay = 1;
             parseChoiceAction(lineChoice1.substring(lineChoice1.indexOf("\n")+1));
         });
 
         buttonRightChoice.setOnClickListener(v -> {
+            Log.d("buutton", "right choice");
             countChoiceWay = 2;
             parseChoiceAction(lineChoice2.substring(lineChoice2.indexOf("\n")+1));
         });
@@ -599,6 +601,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
             countLine = 0;
             countDialogClick = 0;
             countDialogNum = 0;
+            coins += 15;
             /*editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE),0);
             editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
             editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);

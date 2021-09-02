@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
         android:text="@string/hint_click_first_story"
         android:textColor="@color/primaryBlack"
         android:textSize="@dimen/words_text_size"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/imageWords"
         app:layout_constraintEnd_toEndOf="@+id/imageWords"
         app:layout_constraintHorizontal_bias="0.594"
@@ -123,7 +123,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <TextView
+        android:id="@+id/clickerChoice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="8dp"
+        android:visibility="gone"/>
+
+    <ImageView
         android:id="@+id/imageButtonLeftChoice"
         android:layout_width="206dp"
         android:layout_height="113dp"
@@ -138,14 +145,7 @@
         app:layout_constraintVertical_bias="0.628"
         app:srcCompat="@drawable/words_left_pers_exp" />
 
-    <TextView
-        android:id="@+id/clickerChoice"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="8dp"
-        android:visibility="gone"/>
-
-    <ImageButton
+    <ImageView
         android:id="@+id/imageButtonRightChoice"
         android:layout_width="206dp"
         android:layout_height="113dp"
@@ -206,7 +206,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -219,7 +218,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -232,7 +230,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
