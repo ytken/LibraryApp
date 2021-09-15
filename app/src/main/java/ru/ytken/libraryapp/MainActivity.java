@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         if (coins == -1) {
             DialogFragment newFragment = MyDialogFragment.newInstance();
             newFragment.show(getSupportFragmentManager(), "dialog");
-            coins = 15;
+            coins = 10;
             editor.putInt(getResources().getString(R.string.COIN_NUMBER), coins);
             editor.apply();
         }
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.coin_fragment_dialog, container, false);
+            View v = inflater.inflate(R.layout.welcome_bonus_fragment_dialog, container, false);
             Button buttonGet15 = v.findViewById(R.id.buttonGet15);
             buttonGet15.setOnClickListener(v1 -> {
                 this.dismiss();
@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
         editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), "");
         editor.putInt(getResources().getString(R.string.TAG_PERS_AGE), -1);
+        editor.putInt(getResources().getString(R.string.COIN_NUMBER), -1);
         editor.apply();
     }
 

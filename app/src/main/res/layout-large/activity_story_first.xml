@@ -18,6 +18,19 @@
         app:srcCompat="@color/white" />
 
     <ImageView
+        android:id="@+id/imageBackgrSec"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"
+        android:elevation="1dp"
+        app:srcCompat="@drawable/smoke"
+        android:visibility="invisible"/>
+
+    <ImageView
         android:id="@+id/imageWords"
         android:layout_width="match_parent"
         android:layout_height="1443dp"
@@ -207,7 +220,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -223,7 +235,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
         app:srcCompat="@drawable/lia_cut" />
 
     <ImageView
@@ -235,7 +246,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/stiven_cut"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
         android:visibility="gone"/>
 
     <ImageButton

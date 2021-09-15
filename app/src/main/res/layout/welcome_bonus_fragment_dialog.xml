@@ -18,7 +18,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/marta"
         android:textSize="@dimen/names_text_size"
-        android:text="Результат игры"
+        android:text="Приветственный бонус"
         android:textColor="@color/primaryBlack"
         />
 
@@ -27,25 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
-        android:text="+15"
+        android:text="+10"
         android:textColor="@color/primaryBlack"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="@dimen/big_text_size"
         android:fontFamily="@font/marta"
         android:gravity="center_horizontal" />
-
-    <TextView
-        android:id="@+id/showGottenStates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:layout_margin="10dp"
-        android:text="jkwfjr"
-        android:textColor="@color/primaryBlack"
-        android:textSize="@dimen/big_text_size"
-        android:gravity="center"
-        />
 
     <Button
         android:id="@+id/buttonGet15"

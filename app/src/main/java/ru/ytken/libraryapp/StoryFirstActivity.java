@@ -38,7 +38,7 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
     String line = "", lineDialog = "s", lineChoice1 = "", lineChoice2 = "", nickname = "", wordsPers = "***", namePersoTalk = "", textChoice = "", modeGame="";
     int picId, textId, textDialogId;
     ImageButton backButton;
-    ImageView imageView, imageLeftView, imageRightView, buttonLeftChoice, buttonRightChoice, backgr, imageGG, imageChar;
+    ImageView imageView, imageLeftView, imageRightView, buttonLeftChoice, buttonRightChoice, backgr, backgr2, imageGG, imageChar;
     TextView wordsView, wordsLeftView, wordsRightView, talkingText, clicker, textLeftChoice, textRightChoice, clickerInner, clickerChoice;
     BufferedReader reader, readerDialog;
     static SharedPreferences sPref; static SharedPreferences.Editor editor;
@@ -57,6 +57,8 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
         backgr = findViewById(R.id.imageBackgr);
         backgr.setOnClickListener(this);
+
+        backgr2 = findViewById(R.id.imageBackgrSec);
 
         backButton = findViewById(R.id.story_button_back_story);
         backButton.setOnClickListener(v -> finish());
@@ -310,6 +312,13 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
 
     void setBackgrIm(String name) {
         String pic = name.substring(6);
+        if (pic.contains("+")) {
+            if (pic.substring(pic.indexOf("+")+1).equals("smoke"))
+                backgr2.setVisibility(View.VISIBLE);
+            else
+                backgr2.setVisibility(View.INVISIBLE);
+            pic = pic.substring(0,pic.indexOf("+"));
+        }
         switch (pic) {
             case "house": picId = R.drawable.main_pers_house; break;
             case "purple": picId = R.drawable.purple_flash; break;
