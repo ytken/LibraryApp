@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.ytken.libraryapp.dialogs.DialogSaving;
+import ru.ytken.libraryapp.dialogs.MessageDialog;
 import ru.ytken.libraryapp.recycler.RecAdapter;
 import ru.ytken.libraryapp.recycler.StoryItem;
 
@@ -75,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
         if (coins == -1) {
             DialogFragment newFragment = MyDialogFragment.newInstance();
             newFragment.show(getSupportFragmentManager(), "dialog");
-            coins = 10;
+            coins = 100;
             editor.putInt(getResources().getString(R.string.COIN_NUMBER), coins);
             editor.apply();
+            MessageDialog messageDialog = new MessageDialog(getResources().getString(R.string.message_age));
+            messageDialog.show(getSupportFragmentManager(), null);
         }
         textCoins.setText(coins.toString());
     }

@@ -7,6 +7,9 @@
     <string name="cancel">Отмена</string>
     <string name="hint_set_name">Введите имя</string>
     <string name="name_author">Автор</string>
+    <string name="title_dialog_message">Предупреждение</string>
+    <string name="message_smoking">В данной истории демонстрируются сцены курения. Никотин вредит вашему здоровью!</string>
+    <string name="message_age">Данный контент не предназначен для лиц младше 18 лет</string>
 
     <integer name="age">18</integer>
     <dimen name="name_first_story">30</dimen>

@@ -16,18 +16,14 @@
         android:id="@+id/buttonSetDate"
         android:layout_width="130dp"
         android:layout_height="45dp"
-        android:layout_below="@+id/textAgeDate"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/primaryPurple"
         android:fontFamily="@font/marta"
         android:text="Принять"
         android:textColor="@color/primaryWhite"
-        app:layout_constraintBottom_toTopOf="@+id/editTextSetDate"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAgeDate"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextSetDate"
+        app:layout_constraintVertical_bias="0.15" />
 
     <TextView
         android:id="@+id/textAgeDate"
@@ -35,16 +31,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="144dp"
         android:fontFamily="@font/marta"
         android:gravity="center"
         android:text="BirthDate"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/primaryBlack"
+        app:layout_constraintBottom_toTopOf="@+id/editTextSetDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
     <EditText
         android:id="@+id/editTextSetDate"
@@ -52,17 +49,15 @@
         android:layout_width="191dp"
         android:layout_height="46dp"
         android:gravity="center"
-
         android:hint="дд.мм.гггг"
-        android:outlineAmbientShadowColor="@color/primaryBlack"
-        android:textColor="@color/primaryBlack"
-        android:textSize="@dimen/words_text_size"
         android:inputType="date"
+        android:textColor="@color/primaryPurple"
+        android:textSize="@dimen/words_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.544" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

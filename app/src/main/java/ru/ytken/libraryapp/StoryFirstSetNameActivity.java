@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ru.ytken.libraryapp.dialogs.AskNameDialog;
+import ru.ytken.libraryapp.dialogs.MessageDialog;
 
 public class StoryFirstSetNameActivity extends AppCompatActivity implements AskNameDialog.OnFinalListener {
     ImageButton backButton, buttonWoman, buttonMan;
@@ -33,6 +34,9 @@ public class StoryFirstSetNameActivity extends AppCompatActivity implements AskN
         buttonMan.setOnClickListener(v -> {
             launchDialog(res.getString(R.string.main_man_name), "M");
         });
+
+        MessageDialog messageDialog = new MessageDialog(getResources().getString(R.string.message_smoking));
+        messageDialog.show(getSupportFragmentManager(), null);
     }
 
     private void launchDialog(String name, String sex) {

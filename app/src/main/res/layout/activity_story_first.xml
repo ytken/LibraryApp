@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/marta"
         android:text="TextView"
-        android:textColor="@color/primaryBlue"
+        android:textColor="@color/primaryPurple"
         android:textSize="@dimen/words_text_size"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -18,7 +18,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/marta"
         android:textSize="@dimen/names_text_size"
-        android:text="Результат игры"
+        android:text="Вы прошли первую главу"
         android:textColor="@color/primaryBlack"
         />
 

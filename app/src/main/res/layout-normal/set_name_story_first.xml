@@ -10,10 +10,10 @@
         android:id="@+id/story_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/smoke"
+        android:background="@drawable/line_choose_pers"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -30,45 +30,31 @@
 
     <ImageButton
         android:id="@+id/button_woman"
-        android:layout_width="220dp"
-        android:layout_height="532dp"
-        android:scaleType="fitStart"
+        android:layout_width="210dp"
+        android:layout_height="603dp"
         android:background="@android:color/transparent"
+        android:scaleType="fitStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748"
+        app:layout_constraintVertical_bias="0.85"
         app:srcCompat="@drawable/lia_full_lar" />
 
     <ImageButton
         android:id="@+id/button_man"
-        android:layout_width="200dp"
-        android:layout_height="585dp"
+        android:layout_width="210dp"
+        android:layout_height="582dp"
         android:background="@android:color/transparent"
         android:scaleType="fitStart"
+        android:theme="@style/Theme.LibraryApp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.767"
+        app:layout_constraintVertical_bias="0.77"
         app:srcCompat="@drawable/charlie_full_lar" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/marta"
-        android:gravity="center"
-        android:text="Выберите своего персонажа"
-        android:textSize="@dimen/names_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/story_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

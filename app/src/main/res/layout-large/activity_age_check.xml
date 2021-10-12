@@ -54,7 +54,6 @@
         android:gravity="center"
         android:hint="ДД.ММ.ГГГГ"
         android:inputType="date"
-        android:textColor="@color/primaryBlue"
         android:textSize="@dimen/words_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

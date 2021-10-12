@@ -4,11 +4,11 @@
     <style name="Theme.LibraryApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryPurple</item>
-        <item name="colorPrimaryVariant">@color/primaryBlue</item>
+        <item name="colorPrimaryVariant">@color/primaryPink2</item>
         <item name="colorOnPrimary">@color/primaryBlack</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/primaryGreen</item>
-        <item name="colorSecondaryVariant">@color/primaryBlue</item>
+        <item name="colorSecondary">@color/primaryPink1</item>
+        <item name="colorSecondaryVariant">@color/primaryPink2</item>
         <item name="colorOnSecondary">@color/primaryBlack</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -19,7 +19,7 @@
 
     <style name="MyDatePicker" parent="android:Widget.Material.Light.DatePicker">
         <item name="android:textColorPrimary">@color/primaryBlack</item>
-        <item name="android:textColorHint">@color/primaryBlue</item>
+        <item name="android:textColorHint">@color/primaryPink2</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
