@@ -1,6 +1,7 @@
 package ru.ytken.libraryapp;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -19,13 +20,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.DialogFragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -241,8 +240,10 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
                 wordsView.setText(line);
             else
                 continueDialog = true;
-            DialogFragment dialog = new DialogContinueGame(sPref);
-            dialog.show(getSupportFragmentManager(), "Dialog Continue Game");
+            Dialog dialog = new DialogContinueGame(this,
+                    android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen,
+                    editor, getResources());
+            dialog.show();
         }
         else
             countLine = 0;
@@ -627,9 +628,12 @@ public class StoryFirstActivity extends AppCompatActivity implements View.OnClic
         builder.append((st_sebtrust > 0) ? "доверие к Себу: " : "???:").append(st_sebtrust);
         showStates.setText(builder.toString());
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(StoryFirstActivity.this);
-        alert.setView(linear);
-        alert.show();
+        Dialog dialogCoinFragment = new Dialog(this,
+                android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
+        dialogCoinFragment.setContentView(linear);
+        dialogCoinFragment.show();
+        dialogCoinFragment.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
 
         /*
         LayoutInflater li = LayoutInflater.from(StoryFirstActivity.this);

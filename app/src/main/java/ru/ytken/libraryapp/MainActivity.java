@@ -129,8 +129,10 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 2) {
             if (resultCode == RESULT_CANCELED) {
                 if (FLAG_DIALOG) {
-                    DialogFragment dialog = new DialogSaving(StoryFirstActivity.editor);
-                    dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                    Dialog dialogSave = new DialogSaving(this,
+                            android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen,
+                            StoryFirstActivity.editor, getResources());
+                    dialogSave.show();
                 }
             }
             if (resultCode == RESULT_OK) {

@@ -14,7 +14,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="215dp"
+        android:layout_height="170dp"
         android:background="@drawable/words_right_pers_exp"
         android:elevation="2dp"
         android:orientation="vertical"
@@ -23,8 +23,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingTop="40dp"
-        android:paddingBottom="45dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="15dp"
         android:paddingStart="45dp"
         android:paddingEnd="90dp">
 
@@ -34,15 +34,8 @@
             android:layout_weight="10"
             android:fontFamily="@font/marta"
             android:gravity="center"
-            android:text="@string/askforname"
-            android:textSize="@dimen/names_text_size" />
-
-        <EditText
-            android:id="@+id/editNameChar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            />
+            android:text="Продолжить последнюю игру?"
+            android:textSize="17dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,28 +44,28 @@
             android:weightSum="11">
 
             <Button
-                android:id="@+id/buttonSetCharName"
+                android:id="@+id/buttonContinueGameYes"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:fontFamily="@font/marta"
                 android:textColor="@color/primaryWhite"
-                android:text="Начать" />
+                android:layout_gravity="start"
+                android:text="Да" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-
             <Button
-                android:id="@+id/buttonCancelCharName"
+                android:id="@+id/buttonContinueGameNo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:fontFamily="@font/marta"
                 android:textColor="@color/primaryWhite"
-                android:text="Отмена" />
+                android:text="Нет" />
 
         </LinearLayout>
 

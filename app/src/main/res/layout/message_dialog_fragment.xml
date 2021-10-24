@@ -52,6 +52,7 @@
             android:layout_height="0dp"
             android:layout_weight="7"
             android:fontFamily="@font/marta"
+            android:textColor="@color/primaryWhite"
             android:text="OK" />
 
     </LinearLayout>

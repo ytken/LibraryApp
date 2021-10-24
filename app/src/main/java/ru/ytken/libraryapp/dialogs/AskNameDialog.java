@@ -23,15 +23,15 @@ import ru.ytken.libraryapp.R;
 public class AskNameDialog extends Dialog {
     SharedPreferences sPref; SharedPreferences.Editor editor;
     Resources res;
-    String nameChar;
+    String nameChar, sexChar;
     private OnFinalListener onFinalListener;
 
-    public AskNameDialog(@NonNull Context context, int themeResId, String name, SharedPreferences sPref, Resources res) {
+    public AskNameDialog(@NonNull Context context, int themeResId, String name, String sex, SharedPreferences sPref, Resources res) {
         super(context, themeResId);
         this.sPref = sPref;
         editor = sPref.edit();
         this.res = res;
-        nameChar = name;
+        nameChar = name; sexChar = sex;
         onFinalListener = (OnFinalListener) context;
     }
 
@@ -50,7 +50,20 @@ public class AskNameDialog extends Dialog {
         buttonSetName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                editor.putString(res.getString(R.string.TAG_CHAR_SEX), sexChar);
+                editor.putInt(res.getString(R.string.TAG_COUNT_LINE), 0);
+                editor.putInt(res.getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
+                editor.putInt(res.getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
+                editor.putInt(res.getString(R.string.TAG_BACKGROUND), 0);
+                Log.d("statesF", "setting states to 0");
+                editor.putInt(res.getString(R.string.STATE_COURAGE), 0);
+                editor.putInt(res.getString(R.string.STATE_RESISTANCE), 0);
+                editor.putInt(res.getString(R.string.STATE_DETERMINATION), 0);
+                editor.putInt(res.getString(R.string.STATE_ATTENTION), 0);
+                editor.putInt(res.getString(R.string.TAG_ST_SEB_TRUST), 0);
+
                 editor.putString(res.getString(R.string.TAG_CHAR_NAME), editName.getText().toString());
+
                 editor.apply();
                 onFinalListener.sendSignal();
             }

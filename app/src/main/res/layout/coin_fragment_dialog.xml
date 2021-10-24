@@ -4,8 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primaryPink2"
-    android:weightSum="15">
+    android:background="@drawable/words_author_exp"
+    android:weightSum="15"
+    android:paddingTop="240dp"
+    android:paddingEnd="40dp"
+    android:paddingStart="40dp"
+    android:paddingBottom="260dp">
 
     <TextView
         android:id="@+id/textView2"
@@ -17,7 +21,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/marta"
-        android:textSize="@dimen/names_text_size"
+        android:textSize="15dp"
         android:text="Вы прошли первую главу"
         android:textColor="@color/primaryBlack"
         />
@@ -40,10 +44,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:layout_margin="10dp"
-        android:text="jkwfjr"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="50dp"
+        android:text="jkwfjrhcdshuushcs"
         android:textColor="@color/primaryBlack"
-        android:textSize="@dimen/big_text_size"
+        android:textSize="@dimen/names_text_size"
+        android:fontFamily="@font/marta"
         android:gravity="center"
         />
 
@@ -52,7 +59,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="50dp"
         android:text="Принять"
         android:textColor="@color/primaryWhite"
         android:background="@color/primaryBlack"/>
