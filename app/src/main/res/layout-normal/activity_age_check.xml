@@ -9,7 +9,7 @@
     android:paddingRight="20dp"
     android:paddingEnd="20dp"
     android:theme="@style/Theme.LibraryApp"
-    android:background="@color/primaryWhite"
+    android:background="@color/primaryPink1"
     tools:context=".AskAgeActivity">
 
     <Button
@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextSetDate"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.513" />
 
     <TextView
         android:id="@+id/textAgeDate"
@@ -52,6 +52,7 @@
         android:hint="дд.мм.гггг"
         android:inputType="date"
         android:textColor="@color/primaryPurple"
+        android:textColorHint="@color/primaryPurple"
         android:textSize="@dimen/words_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

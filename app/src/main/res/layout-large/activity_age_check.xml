@@ -9,7 +9,6 @@
     android:paddingRight="20dp"
     android:paddingEnd="20dp"
     android:theme="@style/Theme.LibraryApp"
-    android:background="@color/primaryWhite"
     tools:context=".AskAgeActivity">
 
     <Button

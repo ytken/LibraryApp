@@ -31,44 +31,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="5"
             android:fontFamily="@font/marta"
             android:gravity="center"
-            android:text="@string/askforname"
+            android:text="Предупреждение"
             android:textSize="@dimen/names_text_size" />
 
-        <EditText
-            android:id="@+id/editNameChar"
+        <TextView
+            android:id="@+id/messageInMessageDialog"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8"
-            />
+            android:layout_weight="13"
+            android:fontFamily="@font/marta"
+            android:textSize="@dimen/choice_text_size"
+            android:gravity="center"/>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/buttonDismissInMessageDialog"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/buttonSetCharName"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/marta"
-                android:text="Начать" />
-
-            <Button
-                android:id="@+id/buttonCancelCharName"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/marta"
-                android:text="Отмена" />
-
-        </LinearLayout>
-
-
+            android:fontFamily="@font/marta"
+            android:text="OK" />
 
     </LinearLayout>
 

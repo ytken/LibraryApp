@@ -3,10 +3,12 @@ package ru.ytken.libraryapp.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -14,61 +16,53 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.lang.ref.WeakReference;
+
 import ru.ytken.libraryapp.R;
 
-public class AskNameDialog extends DialogFragment {
-    private EditText editName;
+public class AskNameDialog extends Dialog {
     SharedPreferences sPref; SharedPreferences.Editor editor;
+    Resources res;
+    String nameChar;
+    private OnFinalListener onFinalListener;
 
-
-    public AskNameDialog(SharedPreferences sPref) {
+    public AskNameDialog(@NonNull Context context, int themeResId, String name, SharedPreferences sPref, Resources res) {
+        super(context, themeResId);
         this.sPref = sPref;
         editor = sPref.edit();
+        this.res = res;
+        nameChar = name;
+        onFinalListener = (OnFinalListener) context;
     }
 
     public interface OnFinalListener {
         void sendSignal();
     }
 
-    private OnFinalListener onFinalListener;
-
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder createProjectAlert = new AlertDialog.Builder(getActivity());
-        createProjectAlert.setTitle(getResources().getString(R.string.askforname));
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.setname_dialog_fragment, null);
-        editor.putString(getResources().getString(R.string.TAG_CHAR_SEX), getArguments().getString("sex"));
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_LINE), 0);
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_CLICK),0);
-        editor.putInt(getResources().getString(R.string.TAG_COUNT_DIALOG_NUM), 0);
-        editor.putInt(getResources().getString(R.string.TAG_BACKGROUND), 0);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.setname_dialog_fragment);
 
-        Log.d("statesF", "setting states to 0");
-        editor.putInt(getResources().getString(R.string.STATE_COURAGE), 0);
-        editor.putInt(getResources().getString(R.string.STATE_RESISTANCE), 0);
-        editor.putInt(getResources().getString(R.string.STATE_DETERMINATION), 0);
-        editor.putInt(getResources().getString(R.string.STATE_ATTENTION), 0);
-        editor.putInt(getResources().getString(R.string.TAG_ST_SEB_TRUST), 0);
-
-        createProjectAlert.setView(view)
-                .setPositiveButton(R.string.setname, (dialog, id) -> {
-                    editor.putString(getResources().getString(R.string.TAG_CHAR_NAME), editName.getText().toString());
-                    editor.apply();
-                    onFinalListener.sendSignal();
-                })
-                .setNegativeButton(R.string.cancel, (dialog, id) -> {
-                });
-        editName = view.findViewById(R.id.char_name);
-        editName.setText(getArguments().getString("name"));
-
-        return createProjectAlert.create();
+        EditText editName = findViewById(R.id.editNameChar);
+        editName.setText(nameChar);
+        Button buttonSetName = findViewById(R.id.buttonSetCharName);
+        buttonSetName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putString(res.getString(R.string.TAG_CHAR_NAME), editName.getText().toString());
+                editor.apply();
+                onFinalListener.sendSignal();
+            }
+        });
+        Button buttonCancelName = findViewById(R.id.buttonCancelCharName);
+        buttonCancelName.setOnClickListener(view -> dismiss());
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        onFinalListener = (OnFinalListener) getActivity();
+    public void show() {
+        super.show();
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
+
 }

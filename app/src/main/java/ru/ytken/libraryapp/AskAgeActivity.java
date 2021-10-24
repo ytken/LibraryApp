@@ -20,6 +20,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import ru.ytken.libraryapp.dialogs.MessageDialog;
+
 public class AskAgeActivity extends AppCompatActivity {
 
     private EditText editTextSetBirthdate;
@@ -63,8 +65,11 @@ public class AskAgeActivity extends AppCompatActivity {
                         finish();
                     }
                     else {
-                        DialogFragment dialog = new DialogExit();
-                        dialog.show(getSupportFragmentManager(), "Dialog Exit");
+                        Dialog mesDialog = new MessageDialog(this,
+                                android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen,
+                                getResources().getString(R.string.message_age));
+                        mesDialog.show();
+                        editTextSetBirthdate.setText("");
                     }
                 }
                 else {
@@ -89,18 +94,4 @@ public class AskAgeActivity extends AppCompatActivity {
 
         return ageInt;
     }
-
-    public static class DialogExit extends DialogFragment {
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-            return new AlertDialog.Builder(getContext())
-                    .setTitle("Отказ")
-                    .setMessage("Вход с 18 лет")
-                    .setNeutralButton("Выход", (dialog, which) -> Process.killProcess(Process.myPid()))
-                    .create();
-        }
-    }
-
 }

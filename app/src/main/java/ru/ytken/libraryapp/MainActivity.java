@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -79,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
             coins = 100;
             editor.putInt(getResources().getString(R.string.COIN_NUMBER), coins);
             editor.apply();
-            MessageDialog messageDialog = new MessageDialog(getResources().getString(R.string.message_age));
-            messageDialog.show(getSupportFragmentManager(), null);
+            Dialog mesDialog = new MessageDialog(this,
+                    android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen,
+                    getResources().getString(R.string.message_age));
+            mesDialog.show();
         }
         textCoins.setText(coins.toString());
     }
