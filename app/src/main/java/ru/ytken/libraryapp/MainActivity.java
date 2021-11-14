@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         imageSettings = findViewById(R.id.imageViewSettings);
         imageSettings.setOnClickListener(v -> {
-            Toast.makeText(this, "Здесь будут настройки", Toast.LENGTH_LONG).show();
+            Intent startSettingsAct = new Intent(this, SettingsActivity.class);
+            startActivity(startSettingsAct);
+            //Toast.makeText(this, "Здесь будут настройки", Toast.LENGTH_LONG).show();
         });
 
         recycler = findViewById(R.id.recycler_main);

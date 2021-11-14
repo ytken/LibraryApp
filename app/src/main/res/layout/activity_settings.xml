@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
+
+    <Button
+        android:id="@+id/button_change_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ночная тема"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/primaryBlack"
+        app:layout_constraintTop_toBottomOf="@+id/button_change_theme"
+        tools:layout_editor_absoluteX="126dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/button_link_instagram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Instagram"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <Button
+        android:id="@+id/button_link_vk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="vk"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_link_instagram" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

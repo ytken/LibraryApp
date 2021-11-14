@@ -23,5 +23,6 @@ public class WelcomingActivity extends AppCompatActivity {
         Intent intent = age > 0 ? new Intent(WelcomingActivity.this, MainActivity.class)
                 : new Intent(WelcomingActivity.this, AskAgeActivity.class);
         startActivity(intent);
+        finish();
     }
 }

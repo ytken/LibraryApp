@@ -39,5 +39,11 @@
     <string name="TAG_ST_SEB_TRUST">ST_SEB_TRUST</string>
     <string name="TAG_CHOICE_WAY">CHOICE_WAY</string>
     <string name="TAG_CHOICE_LINE">CHOICE_LINE</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

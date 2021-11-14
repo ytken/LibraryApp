@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.LibraryApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.LibraryApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryPurple</item>
+        <item name="colorPrimary">@color/primaryPink2</item>
         <item name="colorPrimaryVariant">@color/primaryPink2</item>
         <item name="colorOnPrimary">@color/primaryBlack</item>
         <!-- Secondary brand color. -->
