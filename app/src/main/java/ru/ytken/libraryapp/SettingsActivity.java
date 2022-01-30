@@ -8,20 +8,23 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-import ru.ytken.libraryapp.recycler.RecAdapter;
+import ru.ytken.libraryapp.authentication.AnonymAuthActivity;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         Button changeTheme = findViewById(R.id.button_change_theme);
+        mAuth = FirebaseAuth.getInstance();
+
         changeTheme.setOnClickListener(view -> {
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             switch (currentNightMode) {
@@ -42,10 +47,13 @@ public class SettingsActivity extends AppCompatActivity {
                     // Night mode is active, we're using dark theme
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     break;
-                default:
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    break;
             }
+        });
+
+        Button buttonLogIn = findViewById(R.id.button_log_in);
+        buttonLogIn.setOnClickListener(view -> {
+            Intent intent = new Intent(SettingsActivity.this, AnonymAuthActivity.class);
+            startActivity(intent);
         });
 
         Button buttonLinkInst = findViewById(R.id.button_link_instagram);
@@ -62,7 +70,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         Button buttonLinkVk = findViewById(R.id.button_link_vk);
-
         buttonLinkVk.setOnClickListener(view -> {
             Uri uri = Uri.parse("https://vk.com/_u/n.ovechka");
             Intent vk = new Intent(Intent.ACTION_VIEW, uri);
@@ -74,7 +81,6 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/n.ovechka")));
             }
         });
-
     }
 
     private boolean isIntentAvailable(Context ctx, Intent intent) {
